@@ -65,7 +65,7 @@ namespace SimulationDataProcess{
 		cout<<"done.                                                                            "<<endl;
 		{
 			ofstream out;
-			out.open(reconstructionname+".fit.txt");
+			out.open(SimulationDataPath()+reconstructionname+".fit.txt");
 			if(out){
 				out<<fit;
 				out.close();
