@@ -7,7 +7,7 @@ namespace SimulationDataProcess{
 	using namespace std;
 	using namespace Genetic;
 	string SimulationDataPath(){
-		static string str=ENV(PRESEL_DATA)+string("/../Reconstruction/");
+		static string str=ENV(PRESEL_DATA)+string("/../DataFiles/");
 		return str;
 	}
 };
