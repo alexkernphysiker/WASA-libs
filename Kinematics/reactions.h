@@ -5,7 +5,6 @@
 #include <list>
 #include <vector>
 #include "particles.h"
-const double p_he3_eta_threshold=1.5727;
 class Reaction{
 public:
 	Reaction(const Particle&p,const Particle&t,const std::initializer_list<Particle>&products);
