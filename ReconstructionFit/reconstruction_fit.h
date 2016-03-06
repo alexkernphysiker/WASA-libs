@@ -16,7 +16,7 @@ namespace SimulationDataProcess{
 	using namespace GnuplotWrap;
 	string SimulationDataPath();
 	template<class FITFUNC>
-	void He3ForEtaFit(string&&reconstructionname,vector<value<double>>&&E_d_bins,vector<value<double>>&&E_k_bins,shared_ptr<IInitialConditions>init,RANDOM&R){
+	void He3ForEtaFit(const string&&reconstructionname,const vector<value<double>>&&E_d_bins,const vector<value<double>>&&E_k_bins,const shared_ptr<IInitialConditions>init,RANDOM&R){
 		auto params_shown=make_pair(0,2);
 		vector<value<double>> theta_bins=BinsByStep(0.10,0.002,0.13);
 		vector<Distribution2D<double>> E_sp2;
