@@ -2,6 +2,7 @@
 // MIT license
 #ifndef AXWBNBYL
 #	define AXWBNBYL
+#include <math_h/functions.h>
 #define ALLRUNS int runindex=45873;runindex<=46884;runindex++
 const double p_beam_low=1.426;
 const double p_beam_hi=1.635;
@@ -10,7 +11,7 @@ const trigger trigger_he3_forward={.number=10,.scaling=1};
 
 //calsulational designations
 inline double NormPhi(double p){
-	const double twopi=2*3.1415926;
+	const double twopi=2.0*MathTemplates::PI();
 	double phi=p;
 	while(phi<0)phi+=twopi;
 	while(phi>=twopi)phi-=twopi;
