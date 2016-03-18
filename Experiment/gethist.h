@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include <math_h/hist.h>
+#include <math_h/structures.h>
 namespace ROOT_data{
 	using namespace std;
 	using namespace MathTemplates;

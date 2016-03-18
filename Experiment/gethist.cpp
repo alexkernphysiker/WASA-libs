@@ -31,7 +31,7 @@ namespace ROOT_data{
 		return make_pair(double(present_runs),double(allruns));
 	}
 	hist<double> ReadHist(const string&filename,const vector<string>&path,const string&histname){
-		vector<point<double>> points;
+		vector<hist<double>::Point> points;
 		TFile* file=TFile::Open(filename.c_str());
 		if(file){
 			TDirectoryFile* dir1=file;
@@ -49,7 +49,7 @@ namespace ROOT_data{
 						dy=1.0;
 					double x=histogram->GetBinCenter(i);
 					double dx=histogram->GetBinWidth(i)/2.0;
-					points.push_back(point<double>(value<double>(x,dx),value<double>(y,dy)));
+					points.push_back(point<value<double>>(value<double>(x,dx),value<double>(y,dy)));
 				}
 			}
 			file->Close();

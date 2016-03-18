@@ -7,7 +7,7 @@
 #include <sstream>
 #include <gnuplot_wrap.h>
 #include <math_h/error.h>
-#include <math_h/hist.h>
+#include <math_h/structures.h>
 #include <Genetic/fit.h>
 namespace SimulationDataProcess{
 	using namespace std;
@@ -45,7 +45,7 @@ namespace SimulationDataProcess{
 		cout<<"Init1"<<endl;
 		auto points=make_shared<FitPoints>();
 		for(size_t i=0,n=theta_bins.size();i<n;i++)
-			E_sp2[i].FullCycle([&theta_bins,&E_sp2,&points,i](const point3d<double>&P){
+			E_sp2[i].FullCycle([&theta_bins,&E_sp2,&points,i](const point3d<value<double>>&P){
 				if(!P.Z().contains(0))
 					points<<Point({P.X().val(),theta_bins[i].val()},P.Y().val(),P.Z().val());
 			});
@@ -75,11 +75,11 @@ namespace SimulationDataProcess{
 		for(size_t i=0,n=theta_bins.size();i<n;i++){
 			PlotHist2d<double>(sp2).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
 			PlotHist2d<double>(normal).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
-			double max=0;E_sp2[i].FullCycle([&max](const point3d<double>&P){if(P.Z().val()>max)max=P.Z().val();});
-			vector<pair<double,double>> lo,hi;
-			E_sp2[i].FullCycle([max,&lo,&hi](const point3d<double>&P){
+			double max=0;E_sp2[i].FullCycle([&max](const point3d<value<double>>&P){if(P.Z().val()>max)max=P.Z().val();});
+			vector<point<double>> lo,hi;
+			E_sp2[i].FullCycle([max,&lo,&hi](const point3d<value<double>>&P){
 				if(!P.Z().contains(0)){
-					auto p=make_pair(P.X().val(),P.Y().val());
+					auto p=point<double>(P.X().val(),P.Y().val());
 					if(P.Z().val()>(max/2.0))
 						hi.push_back(p);
 					else
