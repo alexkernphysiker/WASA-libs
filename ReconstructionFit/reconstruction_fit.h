@@ -35,7 +35,7 @@ namespace SimulationDataProcess{
 					str>>Edep>>theta>>Ekin;
 					for(size_t i=0,n=theta_bins.size();i<n;i++)
 						if(theta_bins[i].contains(theta))
-							E_sp2[i].Fill(make_pair(Edep,Ekin));
+							E_sp2[i].Fill(Edep,Ekin);
 				}
 				file.close();
 				cout<<"done."<<endl;
