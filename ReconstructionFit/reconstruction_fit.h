@@ -8,6 +8,7 @@
 #include <Genetic/fit.h>
 #include <Genetic/initialconditions.h>
 namespace SimulationDataProcess{
+	std::string SimulationDataPath();
 	void He3ForEtaFit(
 		const std::string&&reconstructionname,
 		const std::shared_ptr<Genetic::IParamFunc>func,
