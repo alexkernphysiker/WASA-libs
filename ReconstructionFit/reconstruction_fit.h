@@ -9,7 +9,7 @@
 #include <Genetic/initialconditions.h>
 namespace SimulationDataProcess{
 	std::string SimulationDataPath();
-	void He3ForEtaFit(
+	void ForwardEkinReconstructionFit(
 		const std::string&&reconstructionname,
 		const std::shared_ptr<Genetic::IParamFunc>func,
 		const std::vector<MathTemplates::value<double>>&&E_d_bins,
