@@ -7,18 +7,16 @@
 #include <vector>
 #include <math_h/structures.h>
 namespace ROOT_data{
-	using namespace std;
-	using namespace MathTemplates;
-	pair<double,double> PresentRuns(string&&reaction);
+	std::pair<double,double> PresentRuns(std::string&&reaction);
 	enum histsource{MC,DATA};
-	hist<double> Hist(histsource src, const string&reaction, const vector<string>&path,const string&histname);
-	hist<double> Hist(histsource src,const string&reaction,const vector<string>&path,string&&histname);
-	hist<double> Hist(histsource src,string&&reaction,const vector<string>&path,string&&histname);
-	hist<double> Hist(histsource src,string&&reaction,vector<string>&&path,string&&histname);
+	MathTemplates::hist<double> Hist(histsource src, const std::string&reaction, const std::vector<std::string>&path,const std::string&histname);
+	MathTemplates::hist<double> Hist(histsource src,const std::string&reaction,const std::vector<std::string>&path,std::string&&histname);
+	MathTemplates::hist<double> Hist(histsource src,std::string&&reaction,const std::vector<std::string>&path,std::string&&histname);
+	MathTemplates::hist<double> Hist(histsource src,std::string&&reaction,std::vector<std::string>&&path,std::string&&histname);
 	
-	hist2d<double> Hist2d(histsource src, const string&reaction, const vector<string>&path,const string&histname);
-	hist2d<double> Hist2d(histsource src,const string&reaction,const vector<string>&path,string&&histname);
-	hist2d<double> Hist2d(histsource src,string&&reaction,const vector<string>&path,string&&histname);
-	hist2d<double> Hist2d(histsource src,string&&reaction,vector<string>&&path,string&&histname);
+	MathTemplates::hist2d<double> Hist2d(histsource src, const std::string&reaction, const std::vector<std::string>&path,const std::string&histname);
+	MathTemplates::hist2d<double> Hist2d(histsource src,const std::string&reaction,const std::vector<std::string>&path,std::string&&histname);
+	MathTemplates::hist2d<double> Hist2d(histsource src,std::string&&reaction,const std::vector<std::string>&path,std::string&&histname);
+	MathTemplates::hist2d<double> Hist2d(histsource src,std::string&&reaction,std::vector<std::string>&&path,std::string&&histname);
 };
 #endif
