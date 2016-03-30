@@ -3,7 +3,7 @@
 #include <fstream>
 #include <gnuplot_wrap.h>
 #include <math_h/error.h>
-#include <math_h/structures.h>
+#include <math_h/tabledata.h>
 #include <Genetic/fit.h>
 #include <Experiment/str_get.h>
 #include "reconstruction_fit.h"
