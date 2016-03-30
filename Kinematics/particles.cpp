@@ -13,7 +13,10 @@ const double Particle::E2P(const double E) const{
 const double Particle::P2E(const double P) const{
 	return sqrt(pow(P,2)+pow(mass(),2))-mass();
 }
-
+const Particle& Particle::gamma(){
+	static Particle res(0.0,0);
+	return res;
+}
 const Particle& Particle::n(){
 	static Particle res(0.93956,0);
 	return res;

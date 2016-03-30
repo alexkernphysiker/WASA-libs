@@ -10,6 +10,7 @@ public:
 	const int charge()const;
 	const double E2P(const double E)const;
 	const double P2E(const double P)const;
+	static const Particle&gamma();
 	static const Particle&n();
 	static const Particle&p();
 	static const Particle&d();
