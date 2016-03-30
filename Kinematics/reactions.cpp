@@ -14,7 +14,10 @@ namespace MathTemplates {
 		numt m_x,m_y,m_z;
 		Vector3(const numt&x,const numt&y,const numt&z):m_x(x),m_y(y),m_z(z){}
 	public:
-		static const Vector3 zero(){return Vector3(numt(0),numt(0),numt(0));}
+		static inline const Vector3 zero(){return Vector3(numt(0),numt(0),numt(0));}
+		static inline const Vector3 i(){return Vector3(numt(1),numt(0),numt(0));}
+		static inline const Vector3 j(){return Vector3(numt(0),numt(1),numt(0));}
+		static inline const Vector3 k(){return Vector3(numt(0),numt(0),numt(1));}
 		static const Vector3 DesCartes(const numt&x,const numt&y,const numt&z){return Vector3(x,y,z);}
 		static const Vector3 DesCartes(const numt&&x,const numt&&y,const numt&&z){return Vector3(x,y,z);}
 		static const Vector3 Polar(const numt&mag,const numt&theta,const numt&phi){
@@ -31,22 +34,22 @@ namespace MathTemplates {
 		const numt&y()const{return m_y;}
 		const numt&z()const{return m_z;}
 		const numt mag_sqr()const{
-			return sqrt(pow(m_x,2)+pow(m_y,2)+pow(m_z,2));
+			return (m_x*m_x)+(m_y*m_y)+(m_z*m_z);
 		}
 		const numt mag()const{
-			return sqrt(pow(m_x,2)+pow(m_y,2)+pow(m_z,2));
+			return sqrt(mag_sqr());
 		}
 		const numt cos_theta()const{
 			return m_z/mag();
 		}
 		const numt sin_theta()const{
-			return sqrt(pow(m_x,2)+pow(m_y,2))/mag();
+			return sqrt((m_x*m_x)+(m_y*m_y))/mag();
 		}
 		const numt cos_phi()const{
-			return m_x/sqrt(pow(m_x,2)+pow(m_y,2));
+			return m_x/sqrt((m_x*m_x)+(m_y*m_y));
 		}
 		const numt sin_phi()const{
-			return m_x/sqrt(pow(m_x,2)+pow(m_y,2));
+			return m_x/sqrt((m_x*m_x)+(m_y*m_y));
 		}
 		
 		Vector3(const Vector3&source):m_x(source.m_x),m_y(source.m_y),m_z(source.m_z){}
@@ -129,75 +132,84 @@ namespace MathTemplates {
 	};
 	
 	template<class numt>
-	class FourMomentum{
-	private:
-		numt m_E;
-		Vector3<numt> m_P;
-		FourMomentum(const numt&E,const Vector3<numt>&P):m_E(E),m_P(P){
-			if(m_E<0)throw Exception<FourMomentum>("Cannot set negative full energy");
-		}
-		FourMomentum(const numt&&E,const Vector3<numt>&P):FourMomentum(E,P){}
-		FourMomentum(const numt&E,const Vector3<numt>&&P):FourMomentum(E,P){}
-		FourMomentum(const numt&&E,const Vector3<numt>&&P):FourMomentum(E,P){}
+	class Vector4{
 	public:
-		static const FourMomentum zero(){return FourMomentum(numt(0),Vector3<numt>::zero());}
-		static const FourMomentum MassMomentum(const numt&m,const Vector3<numt>&p){
-			if(m<0)throw Exception<FourMomentum>("Cannot set negative mass");
-			return FourMomentum(sqrt(p.mag_sqr()+m*m),p);
-		}
-		static inline const FourMomentum MassMomentum(const numt&&m,const Vector3<numt>&p){return MassMomentum(m,p);}
-		static inline const FourMomentum MassMomentum(const numt&m,const Vector3<numt>&&p){return MassMomentum(m,p);}
-		static inline const FourMomentum MassMomentum(const numt&&m,const Vector3<numt>&&p){return MassMomentum(m,p);}
-		static const FourMomentum MassEkinDir(const numt&m,const numt&E_k,const numt&theta,const numt&phi){
-			if(m<0)throw Exception<FourMomentum>("Cannot set negative mass");
-			if(E_k<0)throw Exception<FourMomentum>("Cannot set negative kinetic energy");
-			numt E=m+E_k;
-			numt p=sqrt((E*E)-(m*m));
-			return FourMomentum(E,Vector3<numt>::Direction(theta,phi)*p);
-		}
-		static inline const FourMomentum MassEkinDir(const numt&m,const numt&E_k,const numt&&theta,const numt&&phi){return MassEkinDir(m,E_k,theta,phi);}
-		static inline const FourMomentum MassEkinDir(const numt&m,const numt&&E_k,const numt&theta,const numt&phi){return MassEkinDir(m,E_k,theta,phi);}
-		static inline const FourMomentum MassEkinDir(const numt&m,const numt&&E_k,const numt&&theta,const numt&&phi){return MassEkinDir(m,E_k,theta,phi);}
-		static inline const FourMomentum MassEkinDir(const numt&&m,const numt&&E_k,const numt&&theta,const numt&&phi){return MassEkinDir(m,E_k,theta,phi);}
-		
-		const numt&E()const{return m_E;}
-		const Vector3<numt>&P()const{return m_P;}
-		const numt p()const{return m_P.mag();}
-		const numt m()const{return sqrt((m_E*m_E)-m_P.mag_sqr());}
-		const numt Ekin()const{return m_E-m();}
-		
-		FourMomentum(const FourMomentum&source):FourMomentum(source.m_E,source.m_P){}
-		FourMomentum&operator=(const FourMomentum&source){m_E=source.m_E;m_P=source.m_P;}
-		
-		FourMomentum&operator+=(const FourMomentum&source){
-			m_E+=source.m_E;
-			m_P+=source.m_P;
+		typedef Vector3<numt> Space;
+	private:
+		numt m_time;
+		Space m_space;
+	public:
+		Vector4(const numt&E,const Space&P):m_time(E),m_space(P){}
+		Vector4(const numt&&E,const Space&P):Vector4(E,P){}
+		Vector4(const numt&E,const Space&&P):Vector4(E,P){}
+		Vector4(const numt&&E,const Space&&P):Vector4(E,P){}
+		Vector4(const Vector4&source):Vector4(source.m_time,source.m_space){}
+		Vector4&operator=(const Vector4&source){
+			m_space=source.m_space;
+			m_time=source.m_time;
 			return *this;
 		}
-		FourMomentum&operator+=(const FourMomentum&&source){
-			return operator+=(source);
-		}
-		const FourMomentum operator+(const FourMomentum&source)const{
-			return FourMomentum(m_E+source.m_E,m_P+source.m_P);
-		}
-		const FourMomentum operator+(const FourMomentum&&source)const{
-			return operator+(source);
+		const numt&time_component()const{return m_time;}
+		const Space&space_component()const{return m_space;}
+		const numt length4()const{
+			return sqrt((m_time*m_time)-m_space.mag_sqr());
 		}
 
-		FourMomentum&operator-=(const FourMomentum&source){
-			m_E-=source.m_E;
-			m_P-=source.m_P;
+		Vector4&operator+=(const Vector4&second){
+			m_time+=second.m_time;
+			m_space+=second.m_space;
 			return *this;
 		}
-		FourMomentum&operator-=(const FourMomentum&&source){
-			return operator-=(source);
+		Vector4&operator+=(const Vector4&&second){
+			return operator+=(second);
 		}
-		const FourMomentum operator-(const FourMomentum&source)const{
-			return FourMomentum(m_E-source.m_E,m_P-source.m_P);
+		const Vector4 operator+(const Vector4&second)const{
+			return Vector4(m_time+second.m_time,m_space+second.m_space);
 		}
-		const FourMomentum operator-(const FourMomentum&&source)const{
-			return operator-(source);
+		const Vector4 operator+(const Vector4&&second)const{
+			return operator+(second);
 		}
+		Vector4&operator-=(const Vector4&second){
+			m_time-=second.m_time;
+			m_space-=second.m_space;
+			return *this;
+		}
+		Vector4&operator-=(const Vector4&&second){
+			return operator-=(second);
+		}
+		const Vector4 operator-(const Vector4&second)const{
+			return Vector4(m_time-second.m_time,m_space-second.m_space);
+		}
+		const Vector4 operator-(const Vector4&&second)const{
+			return operator-(second);
+		}
+		
+		
+		const numt operator*(const Vector4&second)const{
+			return (m_time*second.m_time)-m_space*second.m_space;
+		}
+		const numt operator*(const Vector4&&second)const{
+			return operator*(second);
+		}
+		
+		static const Vector4 zero(){return Vector4(numt(0),Space::zero());}
+		static const Vector4 SpaceLength4(const Space&s,const numt&l4){
+			return Vector4(sqrt(s.mag_sqr()+l4*l4),s);
+		}
+		static inline const Vector4 SpaceLength4(const Space&s,const numt&&l4){return SpaceLength4(s,l4);}
+		static inline const Vector4 SpaceLength4(const Space&&s,const numt&l4){return SpaceLength4(s,l4);}
+		static inline const Vector4 SpaceLength4(const Space&&s,const numt&&l4){return SpaceLength4(s,l4);}
+		static const Vector4 TimeDirLength4(const numt&t,const numt&theta,const numt&phi,const numt&l4){
+			numt Sp=sqrt(t*t-l4*l4);
+			return Vector4(t,Space::Direction(theta,phi)*Sp);
+		}
+		static const Vector4 TimeDirLength4(const numt&&t,const numt&theta,const numt&phi,const numt&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&t,const numt&&theta,const numt&&phi,const numt&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&t,const numt&theta,const numt&phi,const numt&&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&&t,const numt&&theta,const numt&&phi,const numt&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&t,const numt&&theta,const numt&&phi,const numt&&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&&t,const numt&theta,const numt&phi,const numt&&l4){return TimeDirLength4(t,theta,phi,l4);}
+		static const Vector4 TimeDirLength4(const numt&&t,const numt&&theta,const numt&&phi,const numt&&l4){return TimeDirLength4(t,theta,phi,l4);}
 	};
 };
 using namespace std;
@@ -251,17 +263,20 @@ const double Reaction::PbEr2Theta(const double Pbeam, const double Ereg) const{
 }
 
 const double Reaction::MissingMass(const initializer_list<registered_particle_parameters>& data,const double Pbeam) const{
-	auto PTotal=FourMomentum<double>::MassMomentum(m_projectile.mass(),Vector3<double>::Direction(0,0)*Pbeam)
-		+FourMomentum<double>::MassMomentum(m_target.mass(),Vector3<double>::zero());
-	auto PReg=FourMomentum<double>::zero();
-	for(const auto&pr:data)
-		PReg+=FourMomentum<double>::MassEkinDir(products()[pr.index].mass(),pr.E,pr.theta,pr.phi);
-	return (PTotal-PReg).m();
+	auto PTotal=Vector4<double>::SpaceLength4(Vector3<double>::Direction(0,0)*Pbeam,m_projectile.mass())
+			+Vector4<double>::SpaceLength4(Vector3<double>::zero(),m_target.mass());
+	auto PReg=Vector4<double>::zero();
+	for(const auto&pr:data){
+		double m=products()[pr.index].mass();
+		PReg+=Vector4<double>::TimeDirLength4(m+pr.E,pr.theta,pr.phi,m);
+	}
+	return (PTotal-PReg).length4();
 }
 
 const double InvariantMass(const initializer_list<particle_kinematics>& data){
-	auto total=FourMomentum<double>::zero();
-	for(const auto&pr:data)
-		total+=FourMomentum<double>::MassEkinDir(pr.particle.mass(),pr.E,pr.theta,pr.phi);
-	return total.m();
+	auto total=Vector4<double>::zero();
+	for(const auto&pr:data){
+		total+=Vector4<double>::TimeDirLength4(pr.particle.mass()+pr.E,pr.theta,pr.phi,pr.particle.mass());
+	}
+	return total.length4();
 }
