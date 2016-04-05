@@ -14,6 +14,13 @@ Particle& Particle::operator=(const Particle& source){
 Particle& Particle::operator=(const Particle&& source){
 	return operator=(source);
 }
+bool Particle::operator==(const Particle& source) const{
+	return (m_mass==source.m_mass)&&(m_charge==source.m_charge);
+}
+bool Particle::operator==(const Particle&& source) const{
+	return operator==(source);
+}
+
 Particle::~Particle(){}
 const double Particle::mass() const{return m_mass;}
 const int Particle::charge() const{return m_charge;}

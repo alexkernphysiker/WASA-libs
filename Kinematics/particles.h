@@ -9,11 +9,15 @@ public:
 	Particle(const Particle&&source);
 	Particle&operator=(const Particle&source);
 	Particle&operator=(const Particle&&source);
+	bool operator==(const Particle&source)const;
+	bool operator==(const Particle&&source)const;
 	virtual ~Particle();
+	
 	const double mass()const;
 	const int charge()const;
 	const double E2P(const double E)const;
 	const double P2E(const double P)const;
+	
 	static const Particle gamma();
 	static const Particle n();
 	static const Particle p();
