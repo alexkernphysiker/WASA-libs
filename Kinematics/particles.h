@@ -7,6 +7,8 @@ public:
 	Particle();
 	Particle(const Particle&source);
 	Particle(const Particle&&source);
+	Particle&operator=(const Particle&source);
+	Particle&operator=(const Particle&&source);
 	virtual ~Particle();
 	const double mass()const;
 	const int charge()const;

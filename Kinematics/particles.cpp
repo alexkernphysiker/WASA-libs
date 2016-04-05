@@ -6,6 +6,14 @@ Particle::Particle():m_mass(0),m_charge(0){}
 Particle::Particle(double m, int c):m_mass(m),m_charge(c){}
 Particle::Particle(const Particle& source):m_mass(source.m_mass),m_charge(source.m_charge){}
 Particle::Particle(const Particle&& source):m_mass(source.m_mass),m_charge(source.m_charge){}
+Particle& Particle::operator=(const Particle& source){
+	m_mass=source.m_mass;
+	m_charge=source.m_charge;
+	return *this;
+}
+Particle& Particle::operator=(const Particle&& source){
+	return operator=(source);
+}
 Particle::~Particle(){}
 const double Particle::mass() const{return m_mass;}
 const int Particle::charge() const{return m_charge;}
