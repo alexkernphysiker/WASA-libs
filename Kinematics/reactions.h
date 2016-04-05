@@ -8,6 +8,7 @@
 class Reaction{
 public:
 	Reaction(const Particle&p,const Particle&t,const std::initializer_list<Particle>&products);
+	Reaction(const Particle&&p,const Particle&&t,const std::initializer_list<Particle>&products);
 	Reaction(const Reaction&source);
 	virtual ~Reaction();
 	const Particle&target()const;
