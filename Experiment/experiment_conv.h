@@ -15,7 +15,7 @@ const double p_beam_low=1.426;
 const double p_beam_hi=1.635;
 struct trigger{unsigned char number; unsigned long scaling;};
 const trigger trigger_he3_forward={.number=10,.scaling=1};
-const double he3_forward_correct_energy=0.020;
+const double he3_forward_correct_energy=0.017;
 
 
 
