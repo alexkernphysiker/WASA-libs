@@ -1,1 +1,0 @@
-add_library(kinematics SHARED particles.cpp reactions.cpp)
