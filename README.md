@@ -27,8 +27,8 @@ path where pluto is installed
 path where pluto files are stored
 
 
-Directories
-===========
+Directories and files
+=====================
 	FitGen
 submodule with mathematical routines
 
@@ -41,7 +41,7 @@ library with commont routines connected with data access and global constants us
 	ReconstructionFit
 library that provides reconstruction fit
 
-	RunPlutoApp
+	pluto.cpp
 sources of an application than runs pluto for simulation of reactions. Requires following console arguments:
 	[all/over]
 specifying pbeam range (all in experiment or over eta-creation threshold)
