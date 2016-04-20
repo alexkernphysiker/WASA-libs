@@ -82,7 +82,7 @@ namespace SimulationDataProcess{
 					auto p=point<double>(P.X().val(),P.Y().val());
 					if(P.Z().val()>(max/2.0))
 						hi.push_back(p);
-					else if(P.Z().val()>(max/4.0))
+					else 
 						lo.push_back(p);
 				}
 			});
