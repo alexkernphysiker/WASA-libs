@@ -49,7 +49,7 @@ namespace ROOT_data{
 						dy=1.0;
 					double x=histogram->GetBinCenter(i);
 					double dx=histogram->GetBinWidth(i)/2.0;
-					points.push_back(point<value<double>>(value<double>(x,dx),value<double>(y,dy)));
+					points.push_back(point<value<double>>({x,dx},{y,dy}));
 				}
 			}
 			file->Close();
@@ -107,7 +107,7 @@ namespace ROOT_data{
 						double y=histogram->GetBinContent(i,j);
 						double dy=sqrt(y);
 						if(dy<1.0)dy=1.0;
-						res.Bin(i,j)=value<double>(y,dy);
+						res.Bin(i,j)={y,dy};
 					}
 				file->Close();
 				return res;
