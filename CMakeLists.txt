@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.0)
 project(WASAatCOSY_etamesic_3He_search_libs)
 add_subdirectory(FitGen)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FitGen/include/)
