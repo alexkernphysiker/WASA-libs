@@ -6,15 +6,6 @@ add_subdirectory(FitGen)
 include_directories(${FITGEN_INC})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-get_directory_property(has_parent PARENT_DIRECTORY)
-if(has_parent)
-	set(WASA_LIBS_INC 
-		${CMAKE_CURRENT_SOURCE_DIR}
-		${FITGEN_INC}
-		PARENT_SCOPE)
-endif()
-
-
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 foreach(mode QUIET REQUIRED)
   find_package(ROOT 5 ${mode} COMPONENTS Core Gui Gpad Graf Hist RIO Physics Tree)
@@ -44,6 +35,7 @@ if(has_parent)
   set(rootcint_cmd        ${ROOT_rootcint_CMD}   PARENT_SCOPE)
   set(ROOTCINT_EXECUTABLE ${ROOTCINT_EXECUTABLE} PARENT_SCOPE)
   set(ROOT_LIBRARY_DIR    ${ROOT_LIBRARY_DIR}    PARENT_SCOPE)
+  set(WASA_LIBS_INC ${CMAKE_CURRENT_SOURCE_DIR} ${FITGEN_INC} ${ROOT_INCLUDE_DIRS} PARENT_SCOPE)
 endif()
 
 link_directories(${ROOT_LIBRARY_DIR})
