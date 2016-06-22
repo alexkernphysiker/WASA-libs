@@ -1,9 +1,19 @@
 cmake_minimum_required(VERSION 3.0)
 project(WASAatCOSY_etamesic_3He_search_libs)
-add_subdirectory(FitGen)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/FitGen/include/)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_CXX_FLAGS "-pthread -std=gnu++11")
+
+add_subdirectory(FitGen)
+include_directories(${FITGEN_INC})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+get_directory_property(has_parent PARENT_DIRECTORY)
+if(has_parent)
+	set(WASA_LIBS_INC 
+		${CMAKE_CURRENT_SOURCE_DIR}
+		${FITGEN_INC}
+		PARENT_SCOPE)
+endif()
+
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 foreach(mode QUIET REQUIRED)
