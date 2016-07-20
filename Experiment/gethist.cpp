@@ -37,8 +37,8 @@ namespace ROOT_data{
 			TDirectoryFile* dir1=file;
 			for(string name:path){
 				TDirectoryFile* dir2=dynamic_cast<TDirectoryFile*>(dir1->Get(name.c_str()));
-				if(dir2)
-					dir1=dir2;
+				if(dir2)dir1=dir2;
+				else throw Exception<TDirectoryFile>("No directory "+name);
 			}
 			TH1F* histogram=dynamic_cast<TH1F*>(dir1->Get(histname.c_str()));
 			if(histogram){
@@ -51,7 +51,7 @@ namespace ROOT_data{
 					double dx=histogram->GetBinWidth(i)/2.0;
 					points<<point<value<double>>({x,dx},{y,dy});
 				}
-			}
+			}else throw Exception<TH1F>("No histogram "+histname);
 			file->Close();
 			delete file;
 		}
@@ -87,8 +87,8 @@ namespace ROOT_data{
 			TDirectoryFile* dir1=file;
 			for(string name:path){
 				TDirectoryFile* dir2=dynamic_cast<TDirectoryFile*>(dir1->Get(name.c_str()));
-				if(dir2)
-					dir1=dir2;
+				if(dir2)dir1=dir2;
+				else throw Exception<TDirectoryFile>("No directory "+name);
 			}
 			TH2F* histogram=dynamic_cast<TH2F*>(dir1->Get(histname.c_str()));
 			if(histogram){
@@ -111,7 +111,7 @@ namespace ROOT_data{
 					}
 				file->Close();
 				return res;
-			}
+			}else throw Exception<TH2F>("No histogram "+histname);
 			file->Close();
 			delete file;
 		}
