@@ -34,7 +34,7 @@ namespace SimulationDataProcess{
 					double Edep,theta,Ekin;
 					str>>Edep>>theta>>Ekin;
 					for(size_t i=0,n=theta_bins.size();i<n;i++)
-						if(theta_bins[i].contains(theta))
+						if(theta_bins[i].Contains(theta))
 							E_sp2[i].Fill(Edep,Ekin);
 				}
 				file.close();
@@ -46,7 +46,7 @@ namespace SimulationDataProcess{
 		auto points=make_shared<FitPoints>();
 		for(size_t i=0,n=theta_bins.size();i<n;i++)
 			E_sp2[i].FullCycle([&theta_bins,&E_sp2,&points,i](const point3d<value<double>>&P){
-				if(!P.Z().contains(0))
+				if(!P.Z().Contains(0))
 					points<<Point({P.X().val(),theta_bins[i].val()},P.Y().val(),P.Z().val());
 			});
 		cout<<points->size()<<" points"<<endl;
@@ -78,7 +78,7 @@ namespace SimulationDataProcess{
 			double max=0;E_sp2[i].FullCycle([&max](const point3d<value<double>>&P){if(P.Z().val()>max)max=P.Z().val();});
 			vector<point<double>> lo,hi;
 			E_sp2[i].FullCycle([max,&lo,&hi](const point3d<value<double>>&P){
-				if(!P.Z().contains(0)){
+				if(!P.Z().Contains(0)){
 					auto p=point<double>(P.X().val(),P.Y().val());
 					if(P.Z().val()>(max/2.0))
 						hi.push_back(p);
