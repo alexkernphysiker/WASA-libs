@@ -47,10 +47,10 @@ namespace SimulationDataProcess{
 		for(size_t i=0,n=theta_bins.size();i<n;i++)
 			E_sp2[i].FullCycle([&theta_bins,&E_sp2,&points,i](const point3d<value<double>>&P){
 				if(!P.Z().Contains(0))
-					points<<Point({P.X().val(),theta_bins[i].val()},P.Y().val(),P.Z().val());
+					points<<Point({P.X().val(),theta_bins[i].val()},{P.Y().val(),1.0/P.Z().val()});
 			});
 		cout<<points->size()<<" points"<<endl;
-		Fit<DifferentialMutations<>,SumWeightedSquareDiff> fit(points,func);
+		Fit<DifferentialMutations<>,ChiSquare> fit(points,func);
 		cout<<"Init2"<<endl;
 		fit.Init(500,init,R);
 		cout<<"population "<<fit.PopulationSize()<<endl;
