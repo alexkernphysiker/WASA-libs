@@ -16,8 +16,6 @@ public:
 	const std::vector<Particle>&products()const;
 	const double M_before()const;
 	const double M_after()const;
-	const double PThreshold()const;
-	const double EThreshold()const;
 	const double E2Q(const double E)const;
 	const double P2Q(const double P)const;
 	const double PbEr2Theta(const double Pbeam,const double Ereg)const;

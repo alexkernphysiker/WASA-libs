@@ -33,12 +33,6 @@ const double Reaction::M_after() const{
 	return res;
 }
 
-const double Reaction::EThreshold() const{
-	return M_after()-M_before();
-}
-const double Reaction::PThreshold() const{
-	return m_projectile.E2P(EThreshold());
-}
 const double Reaction::E2Q(const double E) const{
 	return sqrt(pow(E+M_before(),2)-pow(m_projectile.E2P(E),2))-M_after();
 }
