@@ -57,9 +57,9 @@ int main(int argc, char **arg){
 		,1,0,0,0);
 	my_reaction.Print();
 	if(string(arg[1])=="all")
-		my_reaction.Loop(40000000);
+		my_reaction.Loop(10000000);
 	else
-		my_reaction.Loop(12000000);
+		my_reaction.Loop(5000000);
 	POPD();
 	return 0;
 }
