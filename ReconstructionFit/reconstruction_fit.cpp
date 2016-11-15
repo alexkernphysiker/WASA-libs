@@ -67,7 +67,7 @@ namespace SimulationDataProcess{
 			ofstream out;
 			out.open(SimulationDataPath()+reconstructionname+".fit.txt");
 			if(out){
-				out<<fit;
+				out<<fit.Parameters();
 				out.close();
 			}else
 				throw Exception<ofstream>("Cannot write output");
