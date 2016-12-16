@@ -11,6 +11,8 @@ inline double NormPhi(double p){
 	return phi;
 }
 #define ALLRUNS int runindex=45873;runindex<=46884;runindex++
+#define ALLMC int runindex=1;runindex<=20;runindex++
+#define CSTR(A) (const_cast<char*>(string(A).c_str()))
 const double p_beam_low=1.426;
 const double p_beam_hi=1.635;
 struct trigger{unsigned char number; unsigned long scaling;};
