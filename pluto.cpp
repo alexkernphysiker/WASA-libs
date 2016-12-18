@@ -33,6 +33,8 @@ int main(int argc, char **arg){
 		react+=" "+string(arg[i]);
 	PUSHD();
 	CD(PLUTO);
+	std::mt19937 gen;
+	std::uniform_int_distribution<int> d(1,254);
 	for(ALLMC){
 	    Reaction he3eta(Particle::p(),Particle::d(),{Particle::he3(),Particle::eta()});
 	    TF1 *mf=nullptr;
@@ -48,8 +50,6 @@ int main(int argc, char **arg){
 	    smear->SetReaction(CSTR("p + d"));
 	    smear->SetMomentumFunction(mf);
 	    makeDistributionManager()->Add(smear);
-	    std::mt19937 gen;
-	    std::uniform_int_distribution<int> d(1,254);
 	    PUtils::SetSeed(d(gen));
 	    cout<<react<<endl;
 	    PReaction my_reaction(CSTR(to_string(p_beam_hi)),CSTR("p"),CSTR("d"),CSTR(react),
