@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #include <unistd.h>
 #include <math.h>
 #include <math_h/error.h>

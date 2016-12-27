@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #include <math.h>
 #include <TObject.h>
 #include <TH1F.h>

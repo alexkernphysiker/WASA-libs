@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #include <math.h>
 #include "particles.h"
 Particle::Particle():m_mass(0),m_charge(0){}

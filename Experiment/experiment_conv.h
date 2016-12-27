@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #ifndef AXWBNBYL
 #	define AXWBNBYL
 #include <math_h/functions.h>

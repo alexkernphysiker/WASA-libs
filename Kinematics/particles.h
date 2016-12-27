@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #ifndef ______PARTICLES_H_____
 #	define ______PARTICLES_H_____
 class Particle{

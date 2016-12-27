@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #include <string>
 #include <sstream>
 #include <unistd.h>

@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #ifndef IOAXYPGO
 # define IOAXYPGO
 #include <Genetic/paramfunc.h>

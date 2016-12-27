@@ -1,5 +1,5 @@
 // this file is distributed under 
-// MIT license
+// GPL license
 #include <fstream>
 #include <gnuplot_wrap.h>
 #include <math_h/error.h>
