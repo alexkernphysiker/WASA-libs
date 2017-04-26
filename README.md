@@ -9,23 +9,8 @@ Required software
 	ROOT
 framework for calulations
 
-	Pluto
-library for Monte Carlo simulation of reaction products. Uses ROOT.
-
 	gnuplot
 software for plotting. Is used by some applications performing final analysis.
-
-
-Needed environment variables
-============================
-	ROOTSYS
-path where ROOT is installed
-
-	PLUTOSYS
-path where pluto is installed
-
-	PLUTO_OUTPUT
-path where pluto files are stored
 
 
 Directories and files
