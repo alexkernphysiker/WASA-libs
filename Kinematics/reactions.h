@@ -20,11 +20,11 @@ public:
 	const double P2Q(const double P)const;
 	const double PbEr2Theta(const double Pbeam,const double Ereg)const;
 	struct registered_particle_parameters{unsigned int index;double E;double theta;double phi;};
-	const double MissingMass(const std::initializer_list<registered_particle_parameters>&data,const double Pbeam)const;
+	const double MissingMass(const std::vector<registered_particle_parameters>&data,const double Pbeam)const;
 private:
 	Particle m_projectile,m_target;
 	std::vector<Particle> m_products;
 };
 struct particle_kinematics{Particle particle; double E,theta,phi;};
-const double InvariantMass(const std::initializer_list<particle_kinematics>&data);
+const double InvariantMass(const std::vector<particle_kinematics>&data);
 #endif 

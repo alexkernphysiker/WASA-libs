@@ -54,7 +54,7 @@ const double Reaction::PbEr2Theta(const double Pbeam, const double Ereg) const{
 	return atan(sin(theta_reg_cm)/(gamma*(cos(theta_reg_cm)+beta/beta_reg_cm)));
 }
 
-const double Reaction::MissingMass(const initializer_list<registered_particle_parameters>& data,const double Pbeam) const{
+const double Reaction::MissingMass(const vector<registered_particle_parameters>& data,const double Pbeam) const{
 	auto PTotal=Vector4<double>::SpaceLength4(Vector3<double>::basis_z()*Pbeam,m_projectile.mass())
 			+Vector4<double>::SpaceLength4(Vector3<double>::zero(),m_target.mass());
 	auto PReg=Vector4<double>::zero();
@@ -65,7 +65,7 @@ const double Reaction::MissingMass(const initializer_list<registered_particle_pa
 	return (PTotal-PReg).length4();
 }
 
-const double InvariantMass(const initializer_list<particle_kinematics>& data){
+const double InvariantMass(const vector<particle_kinematics>& data){
 	auto total=Vector4<double>::zero();
 	for(const auto&pr:data){
 		total+=Vector4<double>::TimeDirLength4(pr.particle.mass()+pr.E,pr.theta,pr.phi,pr.particle.mass());
