@@ -10,8 +10,8 @@ inline double NormPhi(double p){
 	while(phi>=twopi)phi-=twopi;
 	return phi;
 }
-#define ALLRUNS int runindex=45873;runindex<=46884;runindex++
-#define ALLMC int runindex=1;runindex<=50;runindex++
+#define ALLRUNS int runindex=45934;runindex<=46884;runindex++
+#define ALLMC int runindex=1;runindex<=40;runindex++
 #define CSTR(A) (const_cast<char*>(string(A).c_str()))
 const double p_beam_low=1.426;
 const double p_beam_hi=1.635;
