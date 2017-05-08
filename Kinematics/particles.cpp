@@ -17,7 +17,7 @@ const double InvariantMass(const vector<particle_kinematics>& data){
 	return Get4Vector(data).length4();
 }
 
-Particle::Particle():m_mass(INFINITY),m_charge(INFINITY){}
+Particle::Particle():m_mass(INFINITY),m_charge(0){}
 Particle::Particle(double m, int c):m_mass(m),m_charge(c){}
 Particle::Particle(const Particle& source):m_mass(source.m_mass),m_charge(source.m_charge){}
 bool Particle::operator==(const Particle& source) const{
