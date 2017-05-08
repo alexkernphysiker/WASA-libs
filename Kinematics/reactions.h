@@ -2,8 +2,6 @@
 // GPL license
 #ifndef xylgjnjy
 #	define xylgjnjy
-#include <list>
-#include <vector>
 #include "particles.h"
 class Reaction{
 public:
@@ -25,6 +23,4 @@ private:
 	Particle m_projectile,m_target;
 	std::vector<Particle> m_products;
 };
-struct particle_kinematics{Particle particle; double E,theta,phi;};
-const double InvariantMass(const std::vector<particle_kinematics>&data);
 #endif 

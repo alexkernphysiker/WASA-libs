@@ -2,21 +2,21 @@
 // GPL license
 #ifndef ______PARTICLES_H_____
 #	define ______PARTICLES_H_____
+#include <list>
+#include <vector>
+#include <math_h/vectors.h>
 class Particle{
-public:
+protected:
 	Particle();
+public:
 	Particle(const Particle&source);
-	Particle(const Particle&&source);
-	Particle&operator=(const Particle&source);
-	Particle&operator=(const Particle&&source);
 	bool operator==(const Particle&source)const;
-	bool operator==(const Particle&&source)const;
 	virtual ~Particle();
 	
 	const double mass()const;
 	const int charge()const;
-	const double E2P(const double E)const;
-	const double P2E(const double P)const;
+	const double E2P(const double&E)const;
+	const double P2E(const double&P)const;
 	
 	static const Particle gamma();
 	static const Particle n();
@@ -32,5 +32,9 @@ private:
 	double m_mass;
 	int m_charge;
 };
-
+// E - GeV, theta,phi - radians
+struct particle_kinematics{Particle particle; double E,theta,phi;};
+const MathTemplates::Vector4<double> Get4Vector(const particle_kinematics&data);
+const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kinematics>&data);
+const double InvariantMass(const std::vector<particle_kinematics>&data);
 #endif

@@ -64,11 +64,3 @@ const double Reaction::MissingMass(const vector<registered_particle_parameters>&
 	}
 	return (PTotal-PReg).length4();
 }
-
-const double InvariantMass(const vector<particle_kinematics>& data){
-	auto total=Vector4<double>::zero();
-	for(const auto&pr:data){
-		total+=Vector4<double>::TimeDirLength4(pr.particle.mass()+pr.E,pr.theta,pr.phi,pr.particle.mass());
-	}
-	return total.length4();
-}
