@@ -89,7 +89,7 @@ namespace ROOT_data{
 	    switch(src){
 		case MC:{
 		    for(ALLMC){
-			hist<double> tmp=ReadHist(inputpath+"/MC"+reaction+"-"+to_string(runindex)+".root",path,histname);
+			hist<double> tmp=ReadHist(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
 				res=tmp;
@@ -100,7 +100,7 @@ namespace ROOT_data{
 		}break;
 		case DATA:{
 		    for(ALLRUNS){
-			hist<double> tmp=ReadHist(inputpath+"/Data"+reaction+"_run_"+to_string(runindex)+".root",path,histname);
+			hist<double> tmp=ReadHist(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
 				res=tmp;
@@ -118,7 +118,7 @@ namespace ROOT_data{
 		case MC:{
 		    res=ReadHist2D(inputpath+"/MC"+reaction+".root",path,histname);
 		    for(ALLMC){
-			hist2d<double> tmp=ReadHist2D(inputpath+"/MC"+reaction+"-"+to_string(runindex)+".root",path,histname);
+			hist2d<double> tmp=ReadHist2D(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
 				res=tmp;
@@ -129,7 +129,7 @@ namespace ROOT_data{
 		}break;
 		case DATA:{
 		    for(ALLRUNS){
-			hist2d<double> tmp=ReadHist2D(inputpath+"/Data"+reaction+"_run_"+to_string(runindex)+".root",path,histname);
+			hist2d<double> tmp=ReadHist2D(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
 				res=tmp;
@@ -145,7 +145,7 @@ namespace ROOT_data{
 	    size_t allruns=0,present_runs=0;
 	    for(ALLRUNS){
 		allruns++;
-		TFile *file=TFile::Open((inputpath+"/Data"+reaction+"_run_"+to_string(runindex)+".root").c_str());
+		TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
 		if(file){
 		    present_runs++;
 		    file->Close();
