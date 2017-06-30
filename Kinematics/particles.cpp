@@ -47,6 +47,9 @@ const Particle Particle::d(){
 const Particle Particle::he3(){
 	return Particle(2.808950,2);
 }
+const Particle Particle::he4(){
+	return Particle(3.7274225,2);
+}
 const Particle Particle::eta(){
 	return Particle(0.5478,0);
 }
