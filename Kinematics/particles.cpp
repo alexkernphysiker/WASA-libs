@@ -4,17 +4,23 @@
 #include "particles.h"
 using namespace std;
 using namespace MathTemplates;
-const Vector4<double> Get4Vector(const particle_kinematics&data){
+const Vector4<double> Get4Vector(const particle_kine&data){
     return Vector4<double>::TimeDirLength4(data.particle.mass()+data.E,data.theta,data.phi,data.particle.mass());
 }
-const Vector4<double> Get4Vector(const std::vector<particle_kinematics>&data){
+const Vector4<double> Get4Vector(const std::vector<particle_kine>&data){
     auto total=Vector4<double>::zero();
     for(const auto&pr:data)
 	total+=Get4Vector(pr);
     return total;
 }
-const double InvariantMass(const vector<particle_kinematics>& data){
-	return Get4Vector(data).length4();
+const Vector4<double> Get4Vector(const particle_kinp&data){
+    return Vector4<double>::SpaceLength4(Vector3<double>::Polar(data.P,data.theta,data.phi),data.particle.mass());
+}
+const Vector4<double> Get4Vector(const std::vector<particle_kinp>&data){
+    auto total=Vector4<double>::zero();
+    for(const auto&pr:data)
+	total+=Get4Vector(pr);
+    return total;
 }
 
 Particle::Particle():m_mass(INFINITY),m_charge(0){}

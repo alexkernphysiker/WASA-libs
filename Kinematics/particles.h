@@ -32,9 +32,11 @@ private:
     double m_mass;
     int m_charge;
 };
-// E - GeV, theta,phi - radians
-struct particle_kinematics{Particle particle; double E,theta,phi;};
-const MathTemplates::Vector4<double> Get4Vector(const particle_kinematics&data);
-const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kinematics>&data);
-const double InvariantMass(const std::vector<particle_kinematics>&data);
+// E - GeV, P - GeV/c, theta,phi - radians
+struct particle_kine{Particle particle; double E,theta,phi;};
+const MathTemplates::Vector4<double> Get4Vector(const particle_kine&data);
+const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kine>&data);
+struct particle_kinp{Particle particle; double P,theta,phi;};
+const MathTemplates::Vector4<double> Get4Vector(const particle_kinp&data);
+const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kinp>&data);
 #endif
