@@ -55,12 +55,12 @@ const double Reaction::PbEr2Theta(const double Pbeam, const double Ereg) const{
 }
 
 const double Reaction::MissingMass(const vector<registered_particle_parameters>& data,const double Pbeam) const{
-	auto PTotal=Vector4<double>::SpaceLength4(Vector3<double>::basis_z()*Pbeam,m_projectile.mass())
-			+Vector4<double>::SpaceLength4(Vector3<double>::zero(),m_target.mass());
+	auto PTotal=Vector4<>::bySpaceC_and_Length4(Vector3<>::basis_z()*Pbeam,m_projectile.mass())
+			+Vector4<>(m_target.mass());
 	auto PReg=Vector4<double>::zero();
 	for(const auto&pr:data){
 		double m=products()[pr.index].mass();
-		PReg+=Vector4<double>::TimeDirLength4(m+pr.E,pr.theta,pr.phi,m);
+		PReg+=Vector4<>::byTime_Dir_and_Length4(m+pr.E,pr.theta,pr.phi,m);
 	}
 	return (PTotal-PReg).length4();
 }

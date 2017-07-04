@@ -5,7 +5,7 @@
 using namespace std;
 using namespace MathTemplates;
 const Vector4<double> Get4Vector(const particle_kine&data){
-    return Vector4<double>::TimeDirLength4(data.particle.mass()+data.E,data.theta,data.phi,data.particle.mass());
+    return Vector4<double>::byTime_Dir_and_Length4(data.particle.mass()+data.E,data.theta,data.phi,data.particle.mass());
 }
 const Vector4<double> Get4Vector(const std::vector<particle_kine>&data){
     auto total=Vector4<double>::zero();
@@ -14,7 +14,7 @@ const Vector4<double> Get4Vector(const std::vector<particle_kine>&data){
     return total;
 }
 const Vector4<double> Get4Vector(const particle_kinp&data){
-    return Vector4<double>::SpaceLength4(Vector3<double>::Polar(data.P,data.theta,data.phi),data.particle.mass());
+    return Vector4<double>::bySpaceC_and_Length4(Vector3<double>::Polar(data.P,data.theta,data.phi),data.particle.mass());
 }
 const Vector4<double> Get4Vector(const std::vector<particle_kinp>&data){
     auto total=Vector4<double>::zero();
