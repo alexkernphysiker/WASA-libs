@@ -25,7 +25,7 @@ Then add to CMakeLists.txt
 
     add_subdirectory(math_h)
     add_subdirectory(FitGen)
-    add_subdirectory(FitGen)
+    add_subdirectory(WASA-libs)
     include_directories(${MATH_H_INC})
     include_directories(${FITGEN_INC})
     include_directories(${WASA_LIBS_INC})
