@@ -8,7 +8,7 @@ if(NOT ROOT_FOUND)
 	message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
-add_subdirectory(FitGen)
+include_directories(${MATH_H_INC})
 include_directories(${FITGEN_INC})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${ROOT_INCLUDE_DIR})
