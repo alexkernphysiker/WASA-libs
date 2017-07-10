@@ -14,7 +14,7 @@ software for plotting. Is used by some applications performing final analysis.
 
 Other required repositories
 ===========================
-If you have your git repository with cmake project you can add a submodule
+If you have your git repository with cmake project you should add the following submodules
 
     git submodule add https://github.com/alexkernphysiker/math_h.git
     git submodule add https://github.com/alexkernphysiker/FitGen.git
@@ -30,7 +30,7 @@ Then add to CMakeLists.txt
     include_directories(${FITGEN_INC})
     include_directories(${WASA_LIBS_INC})
 
-Then commit your changes :)
+Then commit your changes
 
 
 Directories and files
