@@ -14,9 +14,6 @@ Reaction::Reaction(const Particle& p, const Particle& t, const initializer_list<
 	for(const Particle&item:products)
 		m_products.push_back(item);
 }
-Reaction::Reaction(const Particle&& p, const Particle&& t, const initializer_list< Particle >& products)
-	:Reaction(p,t,products){}
-
 Reaction::Reaction(const Reaction& source)
 :m_projectile(source.m_projectile),m_target(source.m_target){
 	for(const Particle&item:source.m_products)
