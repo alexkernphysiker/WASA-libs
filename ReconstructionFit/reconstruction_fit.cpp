@@ -61,7 +61,7 @@ namespace SimulationDataProcess{
 		cout<<"done.                                                                            "<<endl;
 		{
 			ofstream out;
-			out.open(ENV(POST_ANALYSIS_DATA)+reconstructionname+".fit.txt");
+			out.open(ENV(OUTPUT_PLOTS)+reconstructionname+".fit.txt");
 			if(out){
 				out<<fit.Parameters();
 				out.close();
