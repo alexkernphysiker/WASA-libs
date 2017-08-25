@@ -12,10 +12,6 @@ namespace SimulationDataProcess{
 	using namespace Genetic;
 	using namespace MathTemplates;
 	using namespace GnuplotWrap;
-	string SimulationDataPath(){
-		static string str=ENV(PRESEL_DATA)+string("/../DataFiles/");
-		return str;
-	}
 	void ForwardEkinReconstructionFit(const string&&reconstructionname,const shared_ptr<IParamFunc>func,const SortedChain<value<double>>&&E_d_bins,const SortedChain<value<double>>&&E_k_bins,const shared_ptr<IInitialConditions>init,RANDOM&R){
 		auto params_shown=make_pair(0,2);
 		auto theta_bins=BinsByStep(0.10,0.002,0.13);
@@ -25,7 +21,7 @@ namespace SimulationDataProcess{
 		cout<<theta_bins.size()<<" theta bins"<<endl;
 		{
 			ifstream file;
-			file.open(SimulationDataPath()+reconstructionname+".simulation.txt");
+			file.open(ENV(PRESEL_DATA)+reconstructionname+".simulation.txt");
 			if(file){
 				cout<<"reading..."<<endl;
 				string line;
@@ -65,7 +61,7 @@ namespace SimulationDataProcess{
 		cout<<"done.                                                                            "<<endl;
 		{
 			ofstream out;
-			out.open(SimulationDataPath()+reconstructionname+".fit.txt");
+			out.open(ENV(POST_ANALYSIS_DATA)+reconstructionname+".fit.txt");
 			if(out){
 				out<<fit.Parameters();
 				out.close();
