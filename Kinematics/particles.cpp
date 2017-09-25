@@ -5,7 +5,7 @@
 using namespace std;
 using namespace MathTemplates;
 const LorentzVector<> Get4Vector(const particle_kine&data){
-    return lorentz_byEM(data.particle.mass()+data.Ei,data.particle.mass(),data.theta,data.ph);
+    return lorentz_byEM(data.particle.mass()+data.E,data.particle.mass(),data.theta,data.phi);
 }
 const LorentzVector<> Get4Vector(const std::vector<particle_kine>&data){
     auto total=LorentzVector<>::zero();
