@@ -34,9 +34,9 @@ private:
 };
 // E - GeV, P - GeV/c, theta,phi - radians
 struct particle_kine{Particle particle; double E,theta,phi;};
-const MathTemplates::Vector4<double> Get4Vector(const particle_kine&data);
-const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kine>&data);
+const LorentzVector<> Get4Vector(const particle_kine&data);
+const LorentzVector<> Get4Vector(const std::vector<particle_kine>&data);
 struct particle_kinp{Particle particle; double P,theta,phi;};
-const MathTemplates::Vector4<double> Get4Vector(const particle_kinp&data);
-const MathTemplates::Vector4<double> Get4Vector(const std::vector<particle_kinp>&data);
+const LorentzVector<> Get4Vector(const particle_kinp&data);
+const LorentzVector<> Get4Vector(const std::vector<particle_kinp>&data);
 #endif
