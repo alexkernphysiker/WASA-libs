@@ -14,7 +14,7 @@ const LorentzVector<> Get4Vector(const std::vector<particle_kine>&data){
     return total;
 }
 const LorentzVector<> Get4Vector(const particle_kinp&data){
-    return lorentz_byPM(Polar(data.P,data.theta,data.phi),data.particle.mass());
+    return lorentz_byPM(PolarCoordinates(data.P,data.theta,data.phi),data.particle.mass());
 }
 const LorentzVector<> Get4Vector(const std::vector<particle_kinp>&data){
     auto total=LorentzVector<>::zero();
