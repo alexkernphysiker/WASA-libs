@@ -58,5 +58,5 @@ const double Reaction::MissingMass(const vector<registered_particle_parameters>&
 		double m=products()[pr.index].mass();
 		PReg+=lorentz_byEM(m+pr.E,m,pr.theta,pr.phi);
 	}
-	return (PTotal-PReg).length4();
+	return (PTotal-PReg).M();
 }
