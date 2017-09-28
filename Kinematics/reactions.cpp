@@ -52,11 +52,11 @@ const double Reaction::PbEr2Theta(const double Pbeam, const double Ereg) const{
 }
 
 const double Reaction::MissingMass(const vector<registered_particle_parameters>& data,const double Pbeam) const{
-	auto PTotal=lorentz_byPM(Z<>()*Pbeam,m_projectile.mass())+m_target.mass();
+	auto PTotal=lorentz_byPM(Z<>()*Pbeam,m_projectile.mass())+lorentz_byPM(Zero<>(),m_target.mass());
 	LorentzVector<> PReg=0;
 	for(const auto&pr:data){
 		double m=products()[pr.index].mass();
-		PReg+=lorentz_byEM(m+pr.E,m,pr.theta,pr.phi);
+		PReg+=lorentz_byEM(m+pr.E,m,direction(pr.phi,pr.theta));
 	}
 	return (PTotal-PReg).M();
 }
