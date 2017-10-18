@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 project(WASAatCOSY_etamesic_3He_search_libs)
-set(CMAKE_CXX_FLAGS "-pthread -std=gnu++1z")
 
 if(DEFINED MATH_H_INC)
 if(DEFINED FITGEN_INC)
