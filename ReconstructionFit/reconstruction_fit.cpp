@@ -13,10 +13,9 @@ namespace SimulationDataProcess{
 	using namespace MathTemplates;
 	using namespace GnuplotWrap;
 	void ForwardEkinReconstructionFit(const string&&reconstructionname,const shared_ptr<IParamFunc>func,const SortedChain<value<double>>&&E_d_bins,const SortedChain<value<double>>&&E_k_bins,const shared_ptr<IInitialConditions>init,RANDOM&R){
-		auto params_shown=make_pair(0,2);
 		auto theta_bins=BinsByStep(0.10,0.002,0.13);
 		vector<Distribution2D<double>> E_sp2;
-		for(const value<double>&bin:theta_bins)
+		for(size_t i=0;i<theta_bins.size();i++)
 			E_sp2.push_back(Distribution2D<double>(E_d_bins,E_k_bins));
 		cout<<theta_bins.size()<<" theta bins"<<endl;
 		{
