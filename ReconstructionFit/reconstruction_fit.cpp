@@ -68,8 +68,8 @@ namespace SimulationDataProcess{
 				throw Exception<ofstream>("Cannot write output");
 		}
 		for(size_t i=0,n=theta_bins.size();i<n;i++){
-			PlotHist2d<>(sp2).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
-			PlotHist2d<>(normal).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
+			PlotHist2d(sp2).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
+			PlotHist2d(normal).Distr(E_sp2[i],"Theta=["+to_string(theta_bins[i].min())+":"+to_string(theta_bins[i].max())+"]");
 			double max=0;E_sp2[i].FullCycle([&max](const point3d<value<>>&P){if(P.Z().val()>max)max=P.Z().val();});
 			Points<> lo,hi;
 			E_sp2[i].FullCycle([max,&lo,&hi](const point3d<value<>>&P){
@@ -81,7 +81,7 @@ namespace SimulationDataProcess{
 						lo.push_back(p);
 				}
 			});
-			Plot<>().Points(lo).Points(hi)
+			Plot().Points(lo).Points(hi)
 			.Line(SortedPoints<>([&fit,i,&theta_bins](double x){
                             return fit({x,theta_bins[i].val()});
                         },ChainWithStep(E_d_bins[0].val(),0.001,E_d_bins[E_d_bins.size()-1].val())));
