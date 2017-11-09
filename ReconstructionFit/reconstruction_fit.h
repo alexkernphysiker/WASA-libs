@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <math_h/chains.h>
+#include <math_h/tabledata.h>
 #include <Genetic/fit.h>
 #include <Genetic/initialconditions.h>
 namespace SimulationDataProcess{

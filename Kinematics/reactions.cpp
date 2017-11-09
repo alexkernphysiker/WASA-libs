@@ -36,23 +36,8 @@ const double Reaction::E2Q(const double E) const{
 const double Reaction::P2Q(const double P) const{
 	return sqrt(pow(m_projectile.P2E(P)+M_before(),2)-pow(P,2))-M_after();
 }
-const double Reaction::PbEr2Theta(const double Pbeam, const double Ereg) const{
-	if(m_products.size()!=2)
-		throw Exception<Reaction>("Calculation of theta is available only for binary reactions");
-	double E=m_projectile.P2E(Pbeam);
-	double P=Pbeam;
-	double Q=P2Q(P);
-	double beta = P/(E+M_before());
-	double gamma = 1./sqrt(1.-pow(beta,2));
-	double T_reg_cm = Q/2.*(Q+2*m_products[1].mass())/(Q+M_after());
-	double beta_reg_cm = sqrt(pow(T_reg_cm,2)+2*T_reg_cm*m_products[0].mass())/(T_reg_cm+m_products[0].mass());
-	double p_reg_cm = beta_reg_cm*(m_products[0].mass()+T_reg_cm);
-	double theta_reg_cm = acos((Ereg-(gamma-1)*m_products[0].mass()-gamma*T_reg_cm)/(gamma*beta*p_reg_cm));
-	return atan(sin(theta_reg_cm)/(gamma*(cos(theta_reg_cm)+beta/beta_reg_cm)));
-}
-
 const double Reaction::MissingMass(const vector<registered_particle_parameters>& data,const double Pbeam) const{
-	auto PTotal=lorentz_byPM(Z<>()*Pbeam,m_projectile.mass())+lorentz_byPM(Zero<>(),m_target.mass());
+	auto PTotal=lorentz_byPM(Z()*Pbeam,m_projectile.mass())+lorentz_byPM(Zero(),m_target.mass());
 	auto PReg=LorentzVector<>::zero();
 	for(const auto&pr:data){
 		double m=products()[pr.index].mass();

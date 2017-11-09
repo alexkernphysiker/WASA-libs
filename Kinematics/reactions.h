@@ -15,7 +15,6 @@ public:
 	const double M_after()const;
 	const double E2Q(const double E)const;
 	const double P2Q(const double P)const;
-	const double PbEr2Theta(const double Pbeam,const double Ereg)const;
 	struct registered_particle_parameters{unsigned int index;double E;double theta;double phi;};
 	const double MissingMass(const std::vector<registered_particle_parameters>&data,const double Pbeam)const;
 private:
