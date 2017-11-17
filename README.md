@@ -1,19 +1,18 @@
 WASA analysis libraries
 =======================
 Libraries used for analysis of data obtained from the experiment WASA-at-COSY on searching eta-mesic 3He in May 2014.
-All files are distributed under GPL license
+This repository contains the part of code that is common for both repositories with data analysis software:
+
+    https://github.com/alexkernphysiker/WASA-analysis
+    https://github.com/alexkernphysiker/WASA-analysis
 
 
-Required software
-=================
-	ROOT
-framework for calulations
+All files are distributed under GPL license.
 
-	gnuplot
-software for plotting. Is used by some applications performing final analysis.
 
 Other required repositories
 ===========================
+
 If you have your git repository with cmake project you should add the following submodules
 
     git submodule add https://github.com/alexkernphysiker/math_h.git
