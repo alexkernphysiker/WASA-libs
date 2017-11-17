@@ -3,7 +3,7 @@ WASA analysis libraries
 Libraries used for analysis of data obtained from the experiment WASA-at-COSY on searching eta-mesic 3He in May 2014.
 This repository contains the part of code that is common for both repositories with data analysis software:
 
-    https://github.com/alexkernphysiker/WASA-analysis
+    https://github.com/alexkernphysiker/WASA-RawAnalysis
     https://github.com/alexkernphysiker/WASA-analysis
 
 
