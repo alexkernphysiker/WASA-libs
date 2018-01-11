@@ -82,8 +82,9 @@ namespace ROOT_data{
 	    }
 	    return hist2d<double>({},{});
 	}
-
-	
+//ToDo: create list of good runs
+#define ALLRUNS int runindex=45934;runindex<=46884;runindex++
+#define ALLMC int runindex=1;runindex<=40;runindex++
 	hist<double> Hist(histsource src, const string&reaction, const vector<string>&path,const string&histname){
 	    hist<double> res;
 	    switch(src){
@@ -141,7 +142,7 @@ namespace ROOT_data{
 	    };
 	    return res;
 	}
-	pair<double,double> PresentRuns(string&&reaction){
+	pair<double,double> PresentRuns(const string&reaction){
 	    size_t allruns=0,present_runs=0;
 	    for(ALLRUNS){
 		allruns++;

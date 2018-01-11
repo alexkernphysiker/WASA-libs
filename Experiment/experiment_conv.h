@@ -3,8 +3,6 @@
 #ifndef AXWBNBYL
 #	define AXWBNBYL
 #include <math_h/functions.h>
-#define ALLRUNS int runindex=45934;runindex<=46884;runindex++
-#define ALLMC int runindex=1;runindex<=40;runindex++
 #define CSTR(A) (const_cast<char*>(string(A).c_str()))
 const double p_beam_low=1.426;
 const double p_beam_hi=1.635;
@@ -13,5 +11,4 @@ const trigger trigger_he3_forward={.number=10,.scaling=1};
 const trigger trigger_gammas_central={.number=7,.scaling=10};
 const trigger trigger_elastic1={.number=17,.scaling=4000};
 const trigger trigger_elastic2={.number=21,.scaling=4000};
-
 #endif

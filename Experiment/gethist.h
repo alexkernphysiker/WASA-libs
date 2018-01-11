@@ -7,7 +7,7 @@
 #include <vector>
 #include <math_h/hists.h>
 namespace ROOT_data{
-	std::pair<double,double> PresentRuns(std::string&&reaction);
+	std::pair<double,double> PresentRuns(const std::string&reaction);
 	enum histsource{MC,DATA};
 	MathTemplates::hist<double> Hist(histsource src, const std::string&reaction, const std::vector<std::string>&path,const std::string&histname);
 	MathTemplates::hist2d<double> Hist2d(histsource src, const std::string&reaction, const std::vector<std::string>&path,const std::string&histname);
