@@ -82,6 +82,9 @@ namespace ROOT_data{
 	    }
 	    return hist2d<double>({},{});
 	}
+/********************************/
+/**/const size_t max_run=46110;
+/********************************/
 //ToDo: create list of good runs
 const vector<size_t> valid_runs_list{
 45934,45935,45936,45937,45938,45939,
@@ -92,7 +95,6 @@ const vector<size_t> valid_runs_list{
 46020,46021,46022,46023,46024,46025,46026,46027,46028,46029,46030,46031,46032,46033,46034,46035,46036,46037,46038,46039,
 46040,46041,46042,46043,46044,46045,46046,46047,46048,46049,46050,46051,46052,46053,46054,46055,46056,46057,46058,46059,
 46060,46061,46062,46063,46064,46065,46066,46067,46068,46069,46070,46071,46072,46073,46074,46075,46076,46077,46078,46079,
-/*
 46080,46081,46082,46083,46084,46085,46086,46087,46088,46089,46090,46091,46092,46093,46094,46095,46096,46097,46098,46099,
 46100,46101,46102,46103,46104,46105,46106,46107,46108,46109,46110,46111,46112,46113,46114,46115,46116,46117,46118,46119,
 46120,46121,46122,46123,46124,46125,46126,46127,46128,46129,46130,46131,46132,46133,46134,46135,46136,46137,46138,46139,
@@ -134,7 +136,6 @@ const vector<size_t> valid_runs_list{
 46840,46841,46842,46843,46844,46845,46846,46847,46848,46849,46850,46851,46852,46853,46854,46855,46856,46857,46858,46859,
 46860,46861,46862,46863,46864,46865,46866,46867,46868,46869,46870,46871,46872,46873,46874,46875,46876,46877,46878,46879,
 46880,46881,46882,46883,46884
-*/
 };
 	hist<double> Hist(histsource src, const string&reaction, const vector<string>&path,const string&histname){
 	    hist<double> res;
@@ -151,7 +152,7 @@ const vector<size_t> valid_runs_list{
 		    }
 		}break;
 		case DATA:{
-		    for(const size_t runindex:valid_runs_list){
+		    for(const size_t runindex:valid_runs_list)if(runindex<max_run){
 			hist<double> tmp=ReadHist(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
@@ -180,7 +181,7 @@ const vector<size_t> valid_runs_list{
 		    }
 		}break;
 		case DATA:{
-		    for(const size_t runindex:valid_runs_list){
+		    for(const size_t runindex:valid_runs_list)if(runindex<max_run){
 			hist2d<double> tmp=ReadHist2D(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
 			if(tmp.size()>0){
 			    if(res.size()==0)
@@ -195,7 +196,7 @@ const vector<size_t> valid_runs_list{
 	}
 	pair<double,double> PresentRuns(const string&reaction){
 	    size_t present_runs=0;
-	    for(const size_t runindex:valid_runs_list){
+	    for(const size_t runindex:valid_runs_list)if(runindex<max_run){
 		TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
 		if(file){
 		    present_runs++;
@@ -203,7 +204,7 @@ const vector<size_t> valid_runs_list{
 		    delete file;
 		}
 	    }
-	    return make_pair(double(present_runs),951);
+	    return make_pair(double(present_runs),double(valid_runs_list.size()));
 	}
 
 };
