@@ -14,8 +14,7 @@ namespace SimulationDataProcess{
 	const std::shared_ptr<Genetic::IParamFunc>func,
 	const MathTemplates::SortedChain<MathTemplates::value<double>>&&E_d_bins,
 	const MathTemplates::SortedChain<MathTemplates::value<double>>&&E_k_bins,
-	const std::shared_ptr<Genetic::IInitialConditions>init,
-	Genetic::RANDOM&R
+	const std::shared_ptr<Genetic::IInitialConditions>init
     );
 };
 #endif

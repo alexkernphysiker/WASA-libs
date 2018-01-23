@@ -11,7 +11,7 @@ namespace SimulationDataProcess{
 	using namespace Genetic;
 	using namespace MathTemplates;
 	using namespace GnuplotWrap;
-	void ForwardEkinReconstructionFit(const string&&reconstructionname,const shared_ptr<IParamFunc>func,const SortedChain<value<double>>&&E_d_bins,const SortedChain<value<double>>&&E_k_bins,const shared_ptr<IInitialConditions>init,RANDOM&R){
+	void ForwardEkinReconstructionFit(const string&&reconstructionname,const shared_ptr<IParamFunc>func,const SortedChain<value<double>>&&E_d_bins,const SortedChain<value<double>>&&E_k_bins,const shared_ptr<IInitialConditions>init){
 		auto theta_bins=BinsByStep(0.10,0.002,0.13);
 		vector<Distribution2D<double>> E_sp2;
 		for(size_t i=0;i<theta_bins.size();i++)
@@ -46,14 +46,14 @@ namespace SimulationDataProcess{
 		cout<<points->size()<<" points"<<endl;
 		Fit<DifferentialMutations<>,ChiSquare> fit(points,func);
 		cout<<"Init2"<<endl;
-		fit.Init(500,init,R);
+		fit.Init(500,init);
 		cout<<"population "<<fit.PopulationSize()<<endl;
 		cout<<"Fitting"<<endl;
 		while(
 			(!fit.AbsoluteOptimalityExitCondition(0.000001))&&
 			(!fit.RelativeOptimalityExitCondition(0.00001))
 		){
-			fit.Iterate(R);
+			fit.Iterate();
 			cout<<fit.Optimality()<<"<S<"<<fit.Optimality(fit.PopulationSize()-1)<<"     \r";
 		}
 		cout<<"done.                                                                            "<<endl;

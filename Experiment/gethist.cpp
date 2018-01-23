@@ -83,7 +83,7 @@ namespace ROOT_data{
 	    return hist2d<double>({},{});
 	}
 /********************************/
-/**/const size_t max_run=46200;
+/**/const size_t max_run=46212;
 /********************************/
 //ToDo: create list of good runs
 const vector<size_t> valid_runs_list{
