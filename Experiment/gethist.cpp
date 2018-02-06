@@ -133,7 +133,7 @@ const vector<size_t> valid_runs_list{
 46860,46861,46862,46863,46864,46865,46866,46867,46868,46869,46870,46871,46872,46873,46874,46875,46876,46877,46878,46879,
 46880,46881,46882,46883,46884
 };
-const vector<string> analyses{"F","E","C","CC"};
+const vector<string> analyses{"F","E","C"};
 vector<size_t> present_runs;
 void create_runs_list(){
     if(present_runs.size()>0)return;
@@ -212,7 +212,16 @@ hist2d< double > Hist2d(histsource src, const string& reaction, const vector< st
 }
 pair<double,double> PresentRuns(const string&reaction){
     create_runs_list();
-    return make_pair(double(present_runs.size()),double(valid_runs_list.size()));
+    size_t prr=0;
+        for(const size_t runindex:valid_runs_list){
+        TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
+        if(file){
+            prr++;
+            file->Close();
+            delete file;
+        }
+    }
+    return make_pair(double(prr),double(valid_runs_list.size()));
 }
 
 };
