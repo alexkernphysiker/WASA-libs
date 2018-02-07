@@ -80,7 +80,7 @@ namespace ROOT_data{
 		file->Close();
 		delete file;
 	    }
-	    return hist2d<double>({},{});
+	    return hist2d<>({},{});
 	}
 const vector<size_t> valid_runs_list{
 45934,45935,45936,45937,45938,45939,
