@@ -5,7 +5,7 @@
 #include <string>
 #include <functional>
 #include <vector>
-#include <math_h/hists.h>
+#include <math_h/tabledata.h>
 namespace ROOT_data{
 	std::pair<double,double> PresentRuns(const std::string&reaction);
 	enum histsource{MC,DATA};

@@ -31,13 +31,10 @@ namespace ROOT_data{
 		TH1F* histogram=dynamic_cast<TH1F*>(dir1->Get(histname.c_str()));
 		if(histogram){
 		    for(int i=1,N=histogram->GetNbinsX();i<=N;i++){
-			double y=histogram->GetBinContent(i);
-			double dy=sqrt(y);
-			if(dy<1.0)
-			    dy=1.0;
-			double x=histogram->GetBinCenter(i);
-			double dx=histogram->GetBinWidth(i)/2.0;
-			points<<point<value<double>>({x,dx},{y,dy});
+			const auto Y=std_error(histogram->GetBinContent(i));
+			const double x=histogram->GetBinCenter(i);
+			const double dx=histogram->GetBinWidth(i)/2.0;
+			points<<make_point(value<>(x,dx),Y);
 		    }
 		}else throw Exception<TH1F>("No histogram "+histname+" in file "+filename);
 		file->Close();
@@ -68,10 +65,7 @@ namespace ROOT_data{
 		    );
 		    for(int i=1,N=res.X().size();i<N;i++){
 			for(int j=1,M=res.Y().size();j<M;j++){
-			    double y=histogram->GetBinContent(i,j);
-			    double dy=sqrt(y);
-			    if(dy<1.0)dy=1.0;
-			    res.Bin(i,j)={y,dy};
+			    res.Bin(i,j)=std_error(histogram->GetBinContent(i,j));
 			}
 		    }
 		    file->Close();
