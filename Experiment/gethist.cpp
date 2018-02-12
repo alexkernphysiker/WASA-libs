@@ -207,7 +207,7 @@ hist2d< double > Hist2d(histsource src, const string& reaction, const vector< st
 pair<double,double> PresentRuns(const string&reaction){
     create_runs_list();
     size_t prr=0;
-        for(const size_t runindex:valid_runs_list){
+        for(const size_t runindex:present_runs){
         TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
         if(file){
             prr++;
