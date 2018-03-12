@@ -127,7 +127,7 @@ const vector<size_t> valid_runs_list{
 46860,46861,46862,46863,46864,46865,46866,46867,46868,46869,46870,46871,46872,46873,46874,46875,46876,46877,46878,46879,
 46880,46881,46882,46883,46884
 };
-const vector<string> analyses{"F","Q"};
+const vector<string> analyses{"F","Q","C","CC"};
 vector<size_t> present_runs;
 void create_runs_list(){
     if(present_runs.size()>0)return;
