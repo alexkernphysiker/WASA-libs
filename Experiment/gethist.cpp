@@ -69,6 +69,7 @@ namespace ROOT_data{
 			}
 		    }
 		    file->Close();
+                    delete file;
 		    return res;
 		}else throw Exception<TH1F>("No histogram "+histname+" in file "+filename);
 		file->Close();
