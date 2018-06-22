@@ -22,6 +22,9 @@ if(DEFINED FITGEN_INC)
 
     link_directories(${ROOT_LIBRARY_DIR})
 
+    file(GLOB PARAMETERS Parameters/*.cpp)
+    add_library(parameters SHARED ${PARAMETERS})
+
     file(GLOB EXPERIMENT Experiment/*.cpp)
     add_library(experiment SHARED ${EXPERIMENT})
     target_link_libraries(experiment ${ROOT_LIBRARIES})
