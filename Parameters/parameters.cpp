@@ -19,11 +19,11 @@ const vector<value<>> m_parameters{
     {60.,5.},//eta theta
     {0.51,0.03},//he missing mass
     {2.70,0.03},{3.00,0.03},//gamma missing mass
-    {0.35,0.03},{0.65,0.03},//gamma invariant mass
+    {0.42,0.03},{0.65,0.03},//gamma invariant mass
     //2gamma specific
     {-0.15,0.01},//cos theta
     //6gamma specific
-    {0.010,0.01}//3pi0
+    {0.05,0.005}//3pi0
 };
 vector<ParameterMode> m_correction;
 void init_corrections(){
