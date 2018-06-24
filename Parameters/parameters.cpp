@@ -7,14 +7,14 @@ using namespace std;
 using namespace MathTemplates;
 const vector<value<>> m_parameters{
     //beam momentum correction
-    {0.0046,0.0001},
+    {0.0045,0.0002},
     //3Heeta analysis
     {0.01,0.0005},
     //ppn analysis
     {35.,1.},{42.,1.},//angles
     {-18.,1.},{-9.,1.},//time
     //3He ngamma analysis
-    {0.050,0.005},//energy threshold
+    {0.005,0.001},//energy threshold
     {25.,2.},{-5.,2.},{40.,2.},//time
     {60.,5.},//eta theta
     {0.51,0.03},//he missing mass
