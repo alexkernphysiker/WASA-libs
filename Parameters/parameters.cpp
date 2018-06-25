@@ -7,7 +7,7 @@ using namespace std;
 using namespace MathTemplates;
 const vector<value<>> m_parameters{
     //beam momentum correction
-    {0.0045,0.0002},
+    {0.0040,0.0004},
     //3Heeta analysis
     {0.01,0.0005},
     //ppn analysis
@@ -19,11 +19,11 @@ const vector<value<>> m_parameters{
     {60.,5.},//eta theta
     {0.51,0.03},//he missing mass
     {2.70,0.03},{3.00,0.03},//gamma missing mass
-    {0.42,0.03},{0.65,0.03},//gamma invariant mass
+    {0.45,0.04},{0.65,0.03},//gamma invariant mass
     //2gamma specific
-    {-0.15,0.01},//cos theta
+    {-0.10,0.1},//cos theta
     //6gamma specific
-    {0.05,0.005}//3pi0
+    {0.1,0.01}//3pi0
 };
 vector<ParameterMode> m_correction;
 void init_corrections(){
