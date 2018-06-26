@@ -26,5 +26,6 @@ gamma_mm_hi=gamma_mm_lo+1,
 gamma_im_lo=gamma_mm_hi+1,
 gamma_im_hi=gamma_im_lo+1,
 gg_theta_cut=gamma_im_hi+1,
-three_pi0=gg_theta_cut+1;
+three_pi0=gg_theta_cut+1,
+gamma_im_lo6=three_pi0+1;
 #endif
