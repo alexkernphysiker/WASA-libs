@@ -27,5 +27,6 @@ gamma_im_lo=gamma_mm_hi+1,
 gamma_im_hi=gamma_im_lo+1,
 three_pi0=gamma_im_hi+1,
 gamma_im_lo6=three_pi0+1,
-gamma_im_hi6=gamma_im_lo6+1;
+gamma_im_hi6=gamma_im_lo6+1,
+he3_theta_cut=gamma_im_hi6+1;
 #endif

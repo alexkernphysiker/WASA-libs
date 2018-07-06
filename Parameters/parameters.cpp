@@ -23,7 +23,8 @@ const vector<value<>> m_parameters{
     {0.45,0.01},{0.65,0.01},//gamma invariant mass
     //6gamma specific
     {0.05,0.005},//3pi0
-    {0.35,0.01},{0.65,0.01}//gamma invariant mass
+    {0.35,0.01},{0.65,0.01},//gamma invariant mass
+    {4.5,0.4}//he3 theta cut
 };
 vector<ParameterMode> m_correction;
 void init_corrections(){
