@@ -151,7 +151,7 @@ hist<double> Hist(histsource src, const string&reaction, const vector<string>&pa
     hist<double> res;
     switch(src){ 
         case MC:{
-            for(int runindex=1;runindex<=40;runindex++){
+            for(int runindex=1;runindex<=10;runindex++){
                 hist<double> tmp=ReadHist(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
@@ -181,7 +181,7 @@ hist2d< double > Hist2d(histsource src, const string& reaction, const vector< st
     switch(src){
         case MC:{
             res=ReadHist2D(inputpath+"/MC"+reaction+".root",path,histname);
-            for(int runindex=1;runindex<=40;runindex++){
+            for(int runindex=1;runindex<=10;runindex++){
                 hist2d<double> tmp=ReadHist2D(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
