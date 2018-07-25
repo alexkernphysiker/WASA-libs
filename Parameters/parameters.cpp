@@ -3,6 +3,7 @@
 #include <vector>
 #include <math_h/sigma.h>
 #include "parameters.h"
+#include "systematic.h"
 using namespace std;
 using namespace MathTemplates;
 const vector<value<>> m_parameters{
@@ -58,3 +59,8 @@ double getParameter(size_t index){
 size_t ParametersCount(){
     return m_parameters.size();
 }
+const vector<value<>> m_parameters_local{
+    {0.540,0.001},{0.555,0.001},//he3eta fit parameters
+    {60,5},//ppn fit
+};
+const value<>&Parameter(size_t i){return m_parameters_local[i];}
