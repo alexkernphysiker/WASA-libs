@@ -62,5 +62,6 @@ size_t ParametersCount(){
 const vector<value<>> m_parameters_local{
     {0.540,0.001},{0.555,0.001},//he3eta fit parameters
     {60,5},//ppn fit
+    {1,1},//bound state reaction number )
 };
 const value<>&Parameter(size_t i){return m_parameters_local[i];}
