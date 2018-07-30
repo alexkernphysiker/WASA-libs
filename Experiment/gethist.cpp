@@ -130,12 +130,13 @@ const vector<size_t> valid_runs_list{
 };
 const vector<string> analyses{"All"};
 vector<size_t> present_runs;
+const string suffix_for_test="_";
 void create_runs_list(){
     if(present_runs.size()>0)return;
     for(const size_t runindex:valid_runs_list){
         bool accept=true;
         for(const string&reaction:analyses){
-            TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
+            TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+suffix_for_test+".root").c_str());
             if(file){
                 file->Close();
                 delete file;
@@ -146,13 +147,13 @@ void create_runs_list(){
         if(accept)present_runs.push_back(runindex);
     }
 }
-hist<double> Hist(histsource src, const string&reaction, const vector<string>&path,const string&histname){
+hist<double> Hist(histsource src, const string&reaction, const vector<string>&path,const string&histname,const string&param_suffix){
     create_runs_list();
     hist<double> res;
     switch(src){ 
         case MC:{
             for(int runindex=1;runindex<=10;runindex++){
-                hist<double> tmp=ReadHist(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
+                hist<double> tmp=ReadHist(inputpath+"/MC"+reaction+to_string(runindex)+param_suffix+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
                         res=tmp;
@@ -163,7 +164,7 @@ hist<double> Hist(histsource src, const string&reaction, const vector<string>&pa
         }break;
         case DATA:{
             for(const size_t runindex:present_runs){
-                hist<double> tmp=ReadHist(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
+                hist<double> tmp=ReadHist(inputpath+"/Data"+reaction+to_string(runindex)+param_suffix+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
                         res=tmp;
@@ -175,14 +176,14 @@ hist<double> Hist(histsource src, const string&reaction, const vector<string>&pa
     };
     return res;
 }
-hist2d< double > Hist2d(histsource src, const string& reaction, const vector< string >& path, const string& histname){
+hist2d< double > Hist2d(histsource src, const string& reaction, const vector< string >& path, const string& histname,const string&param_suffix){
     create_runs_list();
     hist2d<double> res;
     switch(src){
         case MC:{
             res=ReadHist2D(inputpath+"/MC"+reaction+".root",path,histname);
             for(int runindex=1;runindex<=10;runindex++){
-                hist2d<double> tmp=ReadHist2D(inputpath+"/MC"+reaction+to_string(runindex)+".root",path,histname);
+                hist2d<double> tmp=ReadHist2D(inputpath+"/MC"+reaction+to_string(runindex)+param_suffix+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
                         res=tmp;
@@ -193,7 +194,7 @@ hist2d< double > Hist2d(histsource src, const string& reaction, const vector< st
         }break;
         case DATA:{
             for(const size_t runindex:present_runs){
-                hist2d<double> tmp=ReadHist2D(inputpath+"/Data"+reaction+to_string(runindex)+".root",path,histname);
+                hist2d<double> tmp=ReadHist2D(inputpath+"/Data"+reaction+to_string(runindex)+param_suffix+".root",path,histname);
                 if(tmp.size()>0){
                     if(res.size()==0)
                         res=tmp;
@@ -205,11 +206,11 @@ hist2d< double > Hist2d(histsource src, const string& reaction, const vector< st
     };
     return res;
 }
-pair<double,double> PresentRuns(const string&reaction){
+pair<double,double> PresentRuns(const string&reaction,const string&param_suffix){
     create_runs_list();
     size_t prr=0;
         for(const size_t runindex:present_runs){
-        TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+".root").c_str());
+        TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+param_suffix+".root").c_str());
         if(file){
             prr++;
             file->Close();
