@@ -130,7 +130,7 @@ const vector<size_t> valid_runs_list{
 };
 const vector<string> analyses{"All"};
 vector<size_t> present_runs;
-const string suffix_for_test="_";
+const string suffix_for_test="19+";
 void create_runs_list(){
     if(present_runs.size()>0)return;
     for(const size_t runindex:valid_runs_list){

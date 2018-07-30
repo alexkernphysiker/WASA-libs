@@ -4,6 +4,7 @@
 #define _________SYSTEMATIC______H________
 #include <memory>
 #include <functional>
+#include <list>
 #include <math_h/sigma3.h>
 const size_t
 he3eta_cut_left=0,
@@ -59,6 +60,25 @@ public:
     inline SystematicError(FUNC func):___m_func([func](const double&x){return SystematicError<indices...>([&x,func](auto... a){return func(x,a...);}).get();}),
                                          m_func([func](const double&x){return SystematicError<indices...>([&x,func](auto... a){return func(x,a...);})();}){}
     inline ~SystematicError(){}
+};
+
+class RawSystematicError{
+private:
+    std::list<size_t> m_parameters;
+    std::function<MathTemplates::Uncertainties<2>(const std::string&)> m_func;
+public:
+    template<class FUNC>
+    inline RawSystematicError(const std::list<size_t>&params,FUNC func):m_parameters(params),m_func([func](const std::string&suffix){return func(suffix);}){}
+    inline ~RawSystematicError(){}
+    inline MathTemplates::Uncertainties<2>operator()()const{
+        MathTemplates::Uncertainties<2> X=m_func("_");
+        for(const size_t index:m_parameters){
+            const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
+            const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
+            X+=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
+        }
+        return X;
+    }
 };
 
 #endif
