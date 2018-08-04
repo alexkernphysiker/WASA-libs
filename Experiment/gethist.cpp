@@ -134,8 +134,8 @@ const string suffix_for_test="19+";
 void create_runs_list(){
     if(present_runs.size()>0)return;
     for(const size_t runindex:valid_runs_list){
-        bool accept=true;
-        for(const string&reaction:analyses){
+        bool accept=(runindex<=46170);
+        if(accept)for(const string&reaction:analyses){
             TFile *file=TFile::Open((inputpath+"/Data"+reaction+to_string(runindex)+suffix_for_test+".root").c_str());
             if(file){
                 file->Close();

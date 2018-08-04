@@ -10,7 +10,8 @@ const size_t
 he3eta_cut_left=0,
 he3eta_cut_right=he3eta_cut_left+1,
 ppn_fit_range=he3eta_cut_right+1,
-bound_state_reaction_index=ppn_fit_range+1
+bound_state_reaction_index=ppn_fit_range+1,
+sixgamma_last_cut=bound_state_reaction_index+1
 ;
 const MathTemplates::value<>&Parameter(size_t i);
 
@@ -31,7 +32,7 @@ public:
         const auto x=m_func(P.val());
         const double xm=m_func(P.min()).val(),xp=m_func(P.max()).val();
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
-        return x+d;
+        return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
     }
     template<class FUNC>
     inline SystematicError(FUNC func):m_func([func](const double&x){return func(x);}){}
@@ -54,7 +55,7 @@ public:
         const auto x=m_func(P.val());
         const double xm=___m_func(P.min()),xp=___m_func(P.max());
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
-        return x+d;
+        return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
     }
     template<class FUNC>
     inline SystematicError(FUNC func):___m_func([func](const double&x){return SystematicError<indices...>([&x,func](auto... a){return func(x,a...);}).get();}),
@@ -75,7 +76,8 @@ public:
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
             const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
-            X+=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
+            const auto d=abs(xm-xp)/2.0;
+            if(d>X.template uncertainty<1>())X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
     }
