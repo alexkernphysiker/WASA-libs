@@ -10,8 +10,7 @@ const size_t
 he3eta_cut_left=0,
 he3eta_cut_right=he3eta_cut_left+1,
 ppn_fit_range=he3eta_cut_right+1,
-bound_state_reaction_index=ppn_fit_range+1,
-sixgamma_last_cut=bound_state_reaction_index+1
+bound_state_reaction_index=ppn_fit_range+1
 ;
 const MathTemplates::value<>&Parameter(size_t i);
 
