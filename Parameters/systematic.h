@@ -33,8 +33,8 @@ public:
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
         return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
     }
-    template<class FUNC>
-    inline SystematicError(FUNC func):m_func([func](const double&x){return func(x);}){}
+    inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&)> func):
+            m_func([func](const double&x){return func(x);}){}
     inline ~SystematicError(){}
 };
 template<size_t index, size_t... indices>
@@ -56,9 +56,10 @@ public:
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
         return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
     }
-    template<class FUNC>
-    inline SystematicError(FUNC func):___m_func([func](const double&x){return SystematicError<indices...>([&x,func](auto... a){return func(x,a...);}).get();}),
-                                         m_func([func](const double&x){return SystematicError<indices...>([&x,func](auto... a){return func(x,a...);})();}){}
+    template<typename... Args>
+    inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&,Args...)> func):
+            ___m_func([func](const double&x){return SystematicError<indices...>([&x,func](Args... a){return func(x,a...);}).get();}),
+               m_func([func](const double&x){return SystematicError<indices...>([&x,func](Args... a){return func(x,a...);})();}){}
     inline ~SystematicError(){}
 };
 

@@ -1,6 +1,3 @@
-cmake_minimum_required(VERSION 3.0)
-project(WASAatCOSY_etamesic_3He_search_libs)
-
 if(DEFINED MATH_H_INC)
 if(DEFINED FITGEN_INC)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/star-cmake")
