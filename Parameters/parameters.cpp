@@ -71,7 +71,7 @@ Uncertainties<2>RawSystematicError::operator()()const{
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
             const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
-            const auto d=abs(xm-xp)/2.0;
+            const auto d=sqrt((xm-xp)*(xm-xp))/2.0;
             if(d>X.template uncertainty<1>())X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
