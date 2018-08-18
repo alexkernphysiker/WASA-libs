@@ -69,18 +69,9 @@ private:
     std::function<MathTemplates::Uncertainties<2>(const std::string&)> m_func;
 public:
     template<class FUNC>
-    inline RawSystematicError(const std::list<size_t>&params,FUNC func):m_parameters(params),m_func([func](const std::string&suffix){return func(suffix);}){}
-    inline ~RawSystematicError(){}
-    inline MathTemplates::Uncertainties<2>operator()()const{
-        MathTemplates::Uncertainties<2> X=m_func("_");
-        for(const size_t index:m_parameters){
-            const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
-            const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
-            const auto d=abs(xm-xp)/2.0;
-            if(d>X.template uncertainty<1>())X+=MathTemplates::uncertainties(0.0,0.0,d);
-        }
-        return X;
-    }
+    RawSystematicError(const std::list<size_t>&params,FUNC func):m_parameters(params),m_func([func](const std::string&suffix){return func(suffix);}){}
+    ~RawSystematicError();
+    MathTemplates::Uncertainties<2>operator()()const;
 };
 
 #endif

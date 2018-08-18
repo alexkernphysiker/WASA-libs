@@ -65,3 +65,14 @@ const vector<value<>> m_parameters_local{
     {1,1},//bound state reaction number )
 };
 const value<>&Parameter(size_t i){return m_parameters_local[i];}
+RawSystematicError::~RawSystematicError(){}
+Uncertainties<2>RawSystematicError::operator()()const{
+        MathTemplates::Uncertainties<2> X=m_func("_");
+        for(const size_t index:m_parameters){
+            const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
+            const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
+            const auto d=abs(xm-xp)/2.0;
+            if(d>X.template uncertainty<1>())X+=MathTemplates::uncertainties(0.0,0.0,d);
+        }
+        return X;
+}
