@@ -4,6 +4,7 @@
 #define _________SYSTEMATIC______H________
 #include <memory>
 #include <functional>
+#include <map>
 #include <list>
 #include <math_h/sigma3.h>
 const size_t
@@ -67,11 +68,13 @@ class RawSystematicError{
 private:
     std::list<size_t> m_parameters;
     std::function<MathTemplates::Uncertainties<2>(const std::string&)> m_func;
+    std::map<size_t,double> m_contrib;
 public:
     template<class FUNC>
     RawSystematicError(const std::list<size_t>&params,FUNC func):m_parameters(params),m_func([func](const std::string&suffix){return func(suffix);}){}
     ~RawSystematicError();
-    MathTemplates::Uncertainties<2>operator()()const;
+    MathTemplates::Uncertainties<2>operator()();
+    const double&contrib(size_t p)const;
 };
 
 #endif
