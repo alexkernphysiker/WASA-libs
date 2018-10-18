@@ -63,7 +63,11 @@ const vector<value<>> m_parameters_local{
     {0.543,0.001},{0.553,0.001},//he3eta fit parameters
     {60,5},//ppn fit
     {1,1},//bound state reaction number )
-    {1,1}//upper limit fit:background power
+    {1,1},//upper limit fit:background power
+    {0,2.5},//upper limit 2g left
+    {0,2.5},//upper limit 2g right
+    {0,2.5},//upper limit 6g left
+    {0,2.5}//upper limit 6g right
 };
 const value<>&Parameter(size_t i){return m_parameters_local[i];}
 RawSystematicError::~RawSystematicError(){}
