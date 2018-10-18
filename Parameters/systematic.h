@@ -13,10 +13,8 @@ he3eta_cut_right=he3eta_cut_left+1,
 ppn_fit_range=he3eta_cut_right+1,
 bound_state_reaction_index=ppn_fit_range+1,
 upper_limit_fit_power=bound_state_reaction_index+1,
-upper_limit_2g_left=upper_limit_fit_power+1,
-upper_limit_2g_right=upper_limit_2g_left+1,
-upper_limit_6g_left=upper_limit_2g_right+1,
-upper_limit_6g_right=upper_limit_6g_left+1
+upper_limit_left=upper_limit_fit_power+1,
+upper_limit_right=upper_limit_left+1
 ;
 const MathTemplates::value<>&Parameter(size_t i);
 
