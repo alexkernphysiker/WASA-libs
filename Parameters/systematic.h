@@ -6,6 +6,7 @@
 #include <functional>
 #include <map>
 #include <list>
+#include <vector>
 #include <math_h/sigma3.h>
 const size_t
 he3eta_cut_left=0,
@@ -24,6 +25,7 @@ class SystematicError<index>{
     template<size_t i,size_t... ii>friend class SystematicError;
 private:
     std::function<MathTemplates::Uncertainties<2>(const double&)> m_func;
+    mutable std::vector<double> m_contrib;
 protected:
     inline double get()const{
         const auto&P=Parameter(index);
@@ -35,8 +37,11 @@ public:
         const auto x=m_func(P.val());
         const double xm=m_func(P.min()).val(),xp=m_func(P.max()).val();
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
-        return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
+	m_contrib.clear();
+	m_contrib.push_back(d.uncertainty<2>());
+        return x+d;
     }
+    const std::vector<double>&contrib()const{return m_contrib;}
     inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&)> func):
             m_func([func](const double&x){return func(x);}){}
     inline ~SystematicError(){}
@@ -45,6 +50,7 @@ template<size_t index, size_t... indices>
 class SystematicError{
     template<size_t i,size_t... ii>friend class SystematicError;
 private:
+    mutable std::vector<double> m_contrib;
     std::function<double(const double&)> ___m_func;
     std::function<MathTemplates::Uncertainties<2>(const double&)> m_func;
 protected:
@@ -58,12 +64,20 @@ public:
         const auto x=m_func(P.val());
         const double xm=___m_func(P.min()),xp=___m_func(P.max());
         const auto d=MathTemplates::uncertainties(0.0,0.0,abs(xm-xp)/2.0);
-        return (d.template uncertainty<2>()>x.template uncertainty<1>())?x+d:x;
+	m_contrib.insert(m_contrib.begin(),d.uncertainty<2>());
+        return x+d;
     }
+    const std::vector<double>&contrib()const{return m_contrib;}
     template<typename... Args>
     inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&,Args...)> func):
             ___m_func([func](const double&x){return SystematicError<indices...>([&x,func](Args... a){return func(x,a...);}).get();}),
-               m_func([func](const double&x){return SystematicError<indices...>([&x,func](Args... a){return func(x,a...);})();}){}
+               m_func([func,this](const double&x){
+		    SystematicError<indices...> calc([&x,func](Args... a){return func(x,a...);});
+		    const auto res=calc();
+		    m_contrib.clear();
+		    for(const auto&p:calc.contrib())m_contrib.push_back(p);
+		    return res;
+	    }){}
     inline ~SystematicError(){}
 };
 
