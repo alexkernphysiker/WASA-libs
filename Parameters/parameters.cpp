@@ -76,12 +76,12 @@ Uncertainties<2>RawSystematicError::operator()(){
             const auto xm=m_func(I+"-"),xp=m_func(I+"+");
             const auto d=sqrt((xm.val()-xp.val())*(xm.val()-xp.val()))/2.0;
 	    m_contrib[index]=d;
-	    m_values_up[index]=xp;
-	    m_values_down[index]=xm;
+	    m_values_up[index]=take_uncertainty_component<1>(xp);
+	    m_values_down[index]=take_uncertainty_component<1>(xm);
 	    X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
 }
 const double&RawSystematicError::contrib(size_t p)const{return m_contrib.find(p)->second;}
-const Uncertainties<2>&RawSystematicError::upper(size_t p)const{return m_values_up.find(p)->second;}
-const Uncertainties<2>&RawSystematicError::lower(size_t p)const{return m_values_down.find(p)->second;}
+const value<>&RawSystematicError::upper(size_t p)const{return m_values_up.find(p)->second;}
+const value<>&RawSystematicError::lower(size_t p)const{return m_values_down.find(p)->second;}

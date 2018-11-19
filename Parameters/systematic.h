@@ -25,8 +25,8 @@ class SystematicError<index>{
     template<size_t i,size_t... ii>friend class SystematicError;
 private:
     std::function<MathTemplates::Uncertainties<2>(const double&)> m_func;
-    mutable std::vector<MathTemplates::Uncertainties<2>> m_upper;
-    mutable std::vector<MathTemplates::Uncertainties<2>> m_lower;
+    mutable std::vector<MathTemplates::value<>> m_upper;
+    mutable std::vector<MathTemplates::value<>> m_lower;
     mutable std::vector<double> m_contrib;
     
 protected:
@@ -42,13 +42,13 @@ public:
         const auto d=abs(xm.val()-xp.val())/2.0;
 	m_contrib.clear();m_upper.clear();m_lower.clear();
 	m_contrib.push_back(d);
-	m_upper.push_back(xp);
-	m_lower.push_back(xm);
+	m_upper.push_back(MathTemplates::take_uncertainty_component<1>(xp));
+	m_lower.push_back(MathTemplates::take_uncertainty_component<1>(xm));
         return x+MathTemplates::uncertainties(0.0,0.0,d);
     }
     const std::vector<double>&contrib()const{return m_contrib;}
-    const std::vector<MathTemplates::Uncertainties<2>>&upper()const{return m_upper;}
-    const std::vector<MathTemplates::Uncertainties<2>>&lower()const{return m_lower;}
+    const std::vector<MathTemplates::value<>>&upper()const{return m_upper;}
+    const std::vector<MathTemplates::value<>>&lower()const{return m_lower;}
     inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&)> func):
             m_func([func](const double&x){return func(x);}){}
     inline ~SystematicError(){}
@@ -58,8 +58,8 @@ class SystematicError{
     template<size_t i,size_t... ii>friend class SystematicError;
 private:
     mutable std::vector<double> m_contrib;
-    mutable std::vector<MathTemplates::Uncertainties<2>> m_upper;
-    mutable std::vector<MathTemplates::Uncertainties<2>> m_lower;
+    mutable std::vector<MathTemplates::value<>> m_upper;
+    mutable std::vector<MathTemplates::value<>> m_lower;
     std::function<MathTemplates::Uncertainties<2>(const double&)> m_func;
 protected:
 public:
@@ -69,13 +69,13 @@ public:
         const auto xm=m_func(P.min()),xp=m_func(P.max());
         const auto d=abs(xm.val()-xp.val())/2.0;
 	m_contrib.insert(m_contrib.begin(),d);
-	m_upper.insert(m_upper.begin(),xp);
-	m_lower.insert(m_lower.begin(),xm);
+	m_upper.insert(m_upper.begin(),MathTemplates::take_uncertainty_component<1>(xp));
+	m_lower.insert(m_lower.begin(),MathTemplates::take_uncertainty_component<1>(xm));
         return x+MathTemplates::uncertainties(0.0,0.0,d);
     }
     const std::vector<double>&contrib()const{return m_contrib;}
-    const std::vector<MathTemplates::Uncertainties<2>>&upper()const{return m_upper;}
-    const std::vector<MathTemplates::Uncertainties<2>>&lower()const{return m_lower;}
+    const std::vector<MathTemplates::value<>>&upper()const{return m_upper;}
+    const std::vector<MathTemplates::value<>>&lower()const{return m_lower;}
     template<typename... Args>
     inline SystematicError(std::function<MathTemplates::Uncertainties<2>(const double&,Args...)> func):
         m_func([func,this](const double&x){
@@ -95,15 +95,15 @@ private:
     std::list<size_t> m_parameters;
     std::function<MathTemplates::Uncertainties<2>(const std::string&)> m_func;
     std::map<size_t,double> m_contrib;
-    std::map<size_t,MathTemplates::Uncertainties<2>> m_values_up,m_values_down;
+    std::map<size_t,MathTemplates::value<>> m_values_up,m_values_down;
 public:
     template<class FUNC>
     RawSystematicError(const std::list<size_t>&params,FUNC func):m_parameters(params),m_func([func](const std::string&suffix){return func(suffix);}){}
     ~RawSystematicError();
     MathTemplates::Uncertainties<2>operator()();
     const double&contrib(size_t p)const;
-    const MathTemplates::Uncertainties<2>&upper(size_t p)const;
-    const MathTemplates::Uncertainties<2>&lower(size_t p)const;
+    const MathTemplates::value<>&upper(size_t p)const;
+    const MathTemplates::value<>&lower(size_t p)const;
 };
 
 #endif
