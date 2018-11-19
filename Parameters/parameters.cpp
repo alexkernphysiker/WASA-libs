@@ -73,11 +73,15 @@ Uncertainties<2>RawSystematicError::operator()(){
         MathTemplates::Uncertainties<2> X=m_func("_");
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
-            const double xm=m_func(I+"-").val(),xp=m_func(I+"+").val();
-            const auto d=sqrt((xm-xp)*(xm-xp))/2.0;
+            const auto xm=m_func(I+"-"),xp=m_func(I+"+");
+            const auto d=sqrt((xm.val()-xp.val())*(xm.val()-xp.val()))/2.0;
 	    m_contrib[index]=d;
+	    m_values_up[index]=xp;
+	    m_values_down[index]=xm;
 	    X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
 }
 const double&RawSystematicError::contrib(size_t p)const{return m_contrib.find(p)->second;}
+const Uncertainties<2>&RawSystematicError::upper(size_t p)const{return m_values_up.find(p)->second;}
+const Uncertainties<2>&RawSystematicError::lower(size_t p)const{return m_values_down.find(p)->second;}
