@@ -67,7 +67,7 @@ public:
         const auto&P=Parameter(index);
         const auto x=m_func(P.val());
         const auto xm=m_func(P.min()),xp=m_func(P.max());
-        const auto d=abs(xm.val()-xp.val())/2.0;
+        const auto d=(sqrt(pow(xm.val()-x.val(),2))+sqrt(pow(xp.val()-x.val(),2)))/2.0;
 	m_contrib.insert(m_contrib.begin(),d);
 	m_upper.insert(m_upper.begin(),MathTemplates::take_uncertainty_component<1>(xp));
 	m_lower.insert(m_lower.begin(),MathTemplates::take_uncertainty_component<1>(xm));

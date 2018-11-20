@@ -1,5 +1,6 @@
 // this file is distributed under 
 // GPL license
+#include <math.h>
 #include <vector>
 #include <math_h/sigma.h>
 #include "parameters.h"
@@ -74,7 +75,7 @@ Uncertainties<2>RawSystematicError::operator()(){
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
             const auto xm=m_func(I+"-"),xp=m_func(I+"+");
-            const auto d=sqrt((xm.val()-xp.val())*(xm.val()-xp.val()))/2.0;
+            const auto d=(sqrt(pow(xp.val()-X.val(),2))+sqrt(pow(xm.val()-X.val(),2)))/2.0;
 	    m_contrib[index]=d;
 	    m_values_up[index]=take_uncertainty_component<1>(xp);
 	    m_values_down[index]=take_uncertainty_component<1>(xm);
