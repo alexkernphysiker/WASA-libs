@@ -69,20 +69,23 @@ const vector<value<>> m_parameters_local{
     {0,2.5}//upper limit right
 };
 const value<>&Parameter(size_t i){return m_parameters_local[i];}
+
 RawSystematicError::~RawSystematicError(){}
-Uncertainties<2>RawSystematicError::operator()(){
+Uncertainties<2>RawSystematicError::operator()()const{
         MathTemplates::Uncertainties<2> X=m_func("_");
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
             const auto xm=m_func(I+"-"),xp=m_func(I+"+");
             const auto d=(sqrt(pow(xp.val()-X.val(),2))+sqrt(pow(xm.val()-X.val(),2)))/2.0;
-	    m_contrib[index]=d;
-	    m_values_up[index]=take_uncertainty_component<1>(xp);
-	    m_values_down[index]=take_uncertainty_component<1>(xm);
+	    SystematicParamRec M,P;
+	    M.changed_value=take_uncertainty_component<1>(xm);
+	    M.delta_value=sqrt(pow(xm.val()-X.val(),2));
+	    M.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xm.uncertainty<1>(),2),2)));
+	    P.changed_value=take_uncertainty_component<1>(xp);
+	    P.delta_value=sqrt(pow(xp.val()-X.val(),2));
+	    P.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2)));
+	    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(M,P);
 	    X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
 }
-const double&RawSystematicError::contrib(size_t p)const{return m_contrib.find(p)->second;}
-const value<>&RawSystematicError::upper(size_t p)const{return m_values_up.find(p)->second;}
-const value<>&RawSystematicError::lower(size_t p)const{return m_values_down.find(p)->second;}
