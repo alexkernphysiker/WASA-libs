@@ -21,7 +21,7 @@ upper_limit_right=upper_limit_left+1
 const MathTemplates::value<>&Parameter(size_t i);
 struct SystematicParamRec{
 	MathTemplates::value<> changed_value;
-	double delta_value,delta_sigma;
+	double delta_value,delta_sigma,delta_sigma_sq;
 };
 
 template<size_t index, size_t... indices>class SystematicError;
@@ -47,12 +47,14 @@ public:
 		{
 		    .changed_value=MathTemplates::take_uncertainty_component<1>(xm),
 		    .delta_value=sqrt(pow(xm.val()-x.val(),2)),
-		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2)))
+		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2))),
+		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2)
 		},
 		{
 		    .changed_value=MathTemplates::take_uncertainty_component<1>(xp),
 		    .delta_value=sqrt(pow(xp.val()-x.val(),2)),
-		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)))
+		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2))),
+		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)
 		}
 	));
         return x+MathTemplates::uncertainties(0.0,0.0,d);
@@ -79,12 +81,14 @@ public:
 		{
 		    .changed_value=MathTemplates::take_uncertainty_component<1>(xm),
 		    .delta_value=sqrt(pow(xm.val()-x.val(),2)),
-		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2)))
+		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2))),
+		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xm.template uncertainty<1>(),2)
 		},
 		{
 		    .changed_value=MathTemplates::take_uncertainty_component<1>(xp),
 		    .delta_value=sqrt(pow(xp.val()-x.val(),2)),
-		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)))
+		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2))),
+		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)
 		}
 	));
         return x+MathTemplates::uncertainties(0.0,0.0,d);

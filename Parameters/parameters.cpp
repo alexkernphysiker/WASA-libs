@@ -81,9 +81,11 @@ Uncertainties<2>RawSystematicError::operator()()const{
 	    M.changed_value=take_uncertainty_component<1>(xm);
 	    M.delta_value=sqrt(pow(xm.val()-X.val(),2));
 	    M.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xm.uncertainty<1>(),2),2)));
+	    M.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xm.uncertainty<1>(),2),2);
 	    P.changed_value=take_uncertainty_component<1>(xp);
 	    P.delta_value=sqrt(pow(xp.val()-X.val(),2));
 	    P.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2)));
+	    P.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2);
 	    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(M,P);
 	    X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
