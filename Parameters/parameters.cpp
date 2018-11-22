@@ -71,7 +71,7 @@ const vector<value<>> m_parameters_local{
 const value<>&Parameter(size_t i){return m_parameters_local[i];}
 
 RawSystematicError::~RawSystematicError(){}
-Uncertainties<2>RawSystematicError::operator()()const{
+Uncertainties<2>RawSystematicError::operator()(bool filter)const{
         MathTemplates::Uncertainties<2> X=m_func("_");
         for(const size_t index:m_parameters){
             const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
@@ -87,7 +87,8 @@ Uncertainties<2>RawSystematicError::operator()()const{
 	    P.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2)));
 	    P.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2);
 	    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(M,P);
-	    X+=MathTemplates::uncertainties(0.0,0.0,d);
+	    if((!filter)||(M.delta_sigma==0)||(P.delta_sigma==0)||((M.delta_value/M.delta_sigma)>1)||((P.delta_value/P.delta_sigma)>1))
+		X+=MathTemplates::uncertainties(0.0,0.0,d);
         }
         return X;
 }
