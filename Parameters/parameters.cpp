@@ -92,3 +92,31 @@ Uncertainties<2>RawSystematicError::operator()(bool filter)const{
         }
         return X;
 }
+RawSystematicError2::~RawSystematicError2(){}
+Uncertainties<3>RawSystematicError2::operator()(bool filter)const{
+        MathTemplates::Uncertainties<3> X=m_func("_");
+        for(const size_t index:m_parameters){
+            const std::string I=(index<10)?"0"+std::to_string(index):std::to_string(index);
+            const auto xm=m_func(I+"-"),xp=m_func(I+"+");
+            const auto d=(sqrt(pow(xp.val()-X.val(),2))+sqrt(pow(xm.val()-X.val(),2)))/2.0;
+	    SystematicParamRec M,P;
+	    M.changed_value=take_uncertainty_component<1>(xm);
+	    M.delta_value=sqrt(pow(xm.val()-X.val(),2));
+	    M.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xm.uncertainty<1>(),2),2)));
+	    M.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xm.uncertainty<1>(),2),2);
+	    P.changed_value=take_uncertainty_component<1>(xp);
+	    P.delta_value=sqrt(pow(xp.val()-X.val(),2));
+	    P.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2)));
+	    P.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2);
+	    if(P.delta_value>0){
+		    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(M,P);
+		    if((!filter)||(M.delta_sigma==0)||(P.delta_sigma==0)||((M.delta_value/M.delta_sigma)>1)||((P.delta_value/P.delta_sigma)>1))
+			X+=MathTemplates::uncertainties(0.0,0.0,M.delta_value,P.delta_value);
+	    }else{
+		    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(P,M);
+		    if((!filter)||(M.delta_sigma==0)||(P.delta_sigma==0)||((M.delta_value/M.delta_sigma)>1)||((P.delta_value/P.delta_sigma)>1))
+			X+=MathTemplates::uncertainties(0.0,0.0,P.delta_value,M.delta_value);
+	    }
+        }
+        return X;
+}
