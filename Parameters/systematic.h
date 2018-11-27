@@ -148,14 +148,16 @@ public:
 		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)
 		};
 	m_param_rec.clear();
-	const auto det=(Pl.delta_value>0)?std::pair<SystematicParamRec,SystematicParamRec>(Mi,Pl):std::pair<SystematicParamRec,SystematicParamRec>(Pl,Mi);
+	const auto det=(xp>x)?std::pair<SystematicParamRec,SystematicParamRec>(Mi,Pl):std::pair<SystematicParamRec,SystematicParamRec>(Pl,Mi);
 	m_param_rec.push_back(det);
 	bool add_this=(!filter);
 	add_this|=(det.first.delta_sigma==0);
 	add_this|=(det.second.delta_sigma==0);
 	add_this|=((det.first.delta_value/det.first.delta_sigma)>1);
 	add_this|=((det.second.delta_value/det.second.delta_sigma)>1);
-        return add_this?x+MathTemplates::uncertainties(0.0,0.0,det.first.delta_value,det.second.delta_value):x;
+	const auto dp=(xp>x)?MathTemplates::uncertainties(0.0,0.0,0.0,Pl.delta_value):MathTemplates::uncertainties(0.0,0.0,Pl.delta_value,0.0);
+	const auto dm=(xm>x)?MathTemplates::uncertainties(0.0,0.0,0.0,Mi.delta_value):MathTemplates::uncertainties(0.0,0.0,Mi.delta_value,0.0);
+        return add_this?x+dp+dm:x;
     }
     inline const std::vector<std::pair<SystematicParamRec,SystematicParamRec>>&details()const{return m_param_rec;}
     inline SystematicError2(std::function<MathTemplates::Uncertainties<3>(const double&)> func):
@@ -187,14 +189,16 @@ public:
 		    .delta_sigma=sqrt(abs(pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2))),
 		    .delta_sigma_sq=pow(x.template uncertainty<1>(),2)-pow(xp.template uncertainty<1>(),2)
 		};
-	const auto det=(Pl.delta_value>0)?std::pair<SystematicParamRec,SystematicParamRec>(Mi,Pl):std::pair<SystematicParamRec,SystematicParamRec>(Pl,Mi);
+	const auto det=(xp>x)?std::pair<SystematicParamRec,SystematicParamRec>(Mi,Pl):std::pair<SystematicParamRec,SystematicParamRec>(Pl,Mi);
 	m_param_rec.insert(m_param_rec.begin(),det);
 	bool add_this=(!filter);
 	add_this|=(det.first.delta_sigma==0);
 	add_this|=(det.second.delta_sigma==0);
 	add_this|=((det.first.delta_value/det.first.delta_sigma)>1);
 	add_this|=((det.second.delta_value/det.second.delta_sigma)>1);
-        return add_this?x+MathTemplates::uncertainties(0.0,0.0,det.first.delta_value,det.second.delta_value):x;
+	const auto dp=(xp>x)?MathTemplates::uncertainties(0.0,0.0,0.0,Pl.delta_value):MathTemplates::uncertainties(0.0,0.0,Pl.delta_value,0.0);
+	const auto dm=(xm>x)?MathTemplates::uncertainties(0.0,0.0,0.0,Mi.delta_value):MathTemplates::uncertainties(0.0,0.0,Mi.delta_value,0.0);
+        return add_this?x+dp+dm:x;
     }
     inline const std::vector<std::pair<SystematicParamRec,SystematicParamRec>>&details()const{return m_param_rec;}
     template<typename... Args>

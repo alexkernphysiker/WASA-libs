@@ -108,15 +108,19 @@ Uncertainties<3>RawSystematicError2::operator()(bool filter)const{
 	    P.delta_value=sqrt(pow(xp.val()-X.val(),2));
 	    P.delta_sigma=sqrt(sqrt(pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2)));
 	    P.delta_sigma_sq=pow(pow(X.uncertainty<1>(),2)-pow(xp.uncertainty<1>(),2),2);
-	    if(P.delta_value>0){
+	    if(xp>0){
 		    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(M,P);
 		    if((!filter)||(M.delta_sigma==0)||(P.delta_sigma==0)||((M.delta_value/M.delta_sigma)>1)||((P.delta_value/P.delta_sigma)>1))
-			X+=MathTemplates::uncertainties(0.0,0.0,M.delta_value,P.delta_value);
+			X+=MathTemplates::uncertainties(0.0,0.0,0.0,P.delta_value);
 	    }else{
 		    m_param_rec[index]=pair<SystematicParamRec,SystematicParamRec>(P,M);
 		    if((!filter)||(M.delta_sigma==0)||(P.delta_sigma==0)||((M.delta_value/M.delta_sigma)>1)||((P.delta_value/P.delta_sigma)>1))
-			X+=MathTemplates::uncertainties(0.0,0.0,P.delta_value,M.delta_value);
+			X+=MathTemplates::uncertainties(0.0,0.0,P.delta_value,0.0);
 	    }
+	    if(xm>X)
+		X+=MathTemplates::uncertainties(0.0,0.0,0.0,M.delta_value);
+	    else
+		X+=MathTemplates::uncertainties(0.0,0.0,M.delta_value,0.0);
         }
         return X;
 }
